@@ -21,10 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = getRetrofit();
 
         Api api = retrofit.create(Api.class);
 
@@ -46,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private Retrofit getRetrofit() {
+        return new Retrofit.Builder()
+                    .baseUrl("https://jsonplaceholder.typicode.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
     }
 }
 
