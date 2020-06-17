@@ -1,4 +1,4 @@
-package User;
+package DataModels;
 
 public class Company {
     private String name;

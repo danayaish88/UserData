@@ -1,6 +1,6 @@
 package networking;
 
-import User.User;
+import DataModels.User;
 
 import java.util.List;
 import retrofit2.Call;

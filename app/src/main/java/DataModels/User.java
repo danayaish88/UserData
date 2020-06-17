@@ -1,4 +1,4 @@
-package User;
+package DataModels;
 
 public class User {
     private String id;
