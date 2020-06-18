@@ -1,6 +1,7 @@
 package recyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.userdata.R;
 import java.util.List;
 import DataModels.User;
+import mainPackage.UserDetails;
 
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
@@ -59,15 +61,24 @@ public class UserAdapter extends
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(UserAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final UserAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        User contact = mUsers.get(position);
+        final User user = mUsers.get(position);
 
         // Set item views based on your views and data model
         TextView textViewName = viewHolder.nameTextView;
-        textViewName.setText(contact.getName());
+        textViewName.setText(user.getName());
         TextView textViewEmail = viewHolder.emailTextView;
-        textViewEmail.setText(contact.getEmail());
+        textViewEmail.setText(user.getEmail());
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(view.getContext(), UserDetails.class);
+                intent.putExtra("User",user);
+                view.getContext().startActivity(intent);
+            }
+        });
 
     }
 

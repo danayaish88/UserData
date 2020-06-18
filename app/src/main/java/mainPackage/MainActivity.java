@@ -1,23 +1,20 @@
 package mainPackage;
 
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.example.userdata.R;
 import java.util.List;
 import DataModels.User;
-import networking.Api;
+import networking.RetrofitC;
 import recyclerView.UserAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,33 +25,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //TODO : please make sure to move the creation of the retrofit object
         // from this screen into the network package , since it might be needed
         // in different screens and to avoid duplicate code .
 
-        Retrofit retrofit = getRetrofit();
-
-        Api api = retrofit.create(Api.class);
-
-        Call<List<User>> call = api.getUsers();
-
+        getUsersFromApi();
         // TODO : please dont put all of your calls into onCreate
         // as there are multiple lifecycle callbacks for an activity .
         // for example let the reference to recycler here onCreate and call
         // getUsers in onStart or onResume .
-        callEnqueue(call);
-
 
 
         // Lookup the recyclerview in activity layout
          rvUsers = (RecyclerView) findViewById(R.id.rvUsers);
 
          //TODO : make sure to deleted commented out code
-//        for(User u:users){
-//            Log.d("name:", String.valueOf(u.getName()));
-//
-//        }
         // Create adapter passing in the sample user data
        // UserAdapter adapter = new UserAdapter(users);
         // Attach the adapter to the recyclerview to populate items
@@ -62,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
         // Set layout manager to position the items
         //rvUsers.setLayoutManager(new LinearLayoutManager(this));
         // That's all!
+
+    }
+
+    private void getUsersFromApi() {
+        RetrofitC retrofit =new RetrofitC();
+
+        Call<List<User>> call = retrofit.api.getUsers();
+
+        callEnqueue(call);
 
     }
 
@@ -76,6 +70,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
 
+                t.printStackTrace();
+
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Error getting Data",
+                        Toast.LENGTH_SHORT);
+
+                toast.show();
+
                 // TODO : please make sure to handle API failure ,
                 // for example try to show a toast using  Toast.makeText(...).show();
                 // that will inform the user about network failure .
@@ -83,17 +85,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     private void populateList(List<User> users) {
         UserAdapter userAdapter = new UserAdapter(users);
         rvUsers.setLayoutManager(new LinearLayoutManager(this));
         rvUsers.setAdapter(userAdapter);
     }
 
-    private Retrofit getRetrofit() {
-        return new Retrofit.Builder()
-                    .baseUrl("https://jsonplaceholder.typicode.com/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-    }
+
 }
 
