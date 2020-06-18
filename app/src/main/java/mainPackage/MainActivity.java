@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
         callEnqueue(call);
 
+
+        //TODO : initial todo
+
         // Lookup the recyclerview in activity layout
          rvUsers = (RecyclerView) findViewById(R.id.rvUsers);
 
