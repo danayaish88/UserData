@@ -32,6 +32,9 @@ public class User implements Parcelable {
         email = in.readString();
         phone = in.readString();
         website = in.readString();
+        company=in.readParcelable(Company.class.getClassLoader());
+        address=in.readParcelable(Address.class.getClassLoader());
+
     }
 
     @Override
@@ -42,6 +45,8 @@ public class User implements Parcelable {
         dest.writeString(email);
         dest.writeString(phone);
         dest.writeString(website);
+        dest.writeParcelable(company,flags);
+        dest.writeParcelable(address,flags);
     }
 
     @Override

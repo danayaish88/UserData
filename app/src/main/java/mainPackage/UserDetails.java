@@ -8,9 +8,29 @@ import android.widget.TextView;
 
 import com.example.userdata.R;
 
+import DataModels.Address;
+import DataModels.Company;
 import DataModels.User;
 
 public class UserDetails extends AppCompatActivity {
+
+    public static final String TAG ="User" ;
+
+    private String name;
+    private String username;
+    private String email;
+    private Address address;
+    private String phone;
+    private String website;
+    private Company company;
+
+    private TextView nameTV;
+    private TextView usernameTV;
+    private TextView emailTV;
+    private TextView addressTV;
+    private TextView phoneTV;
+    private TextView websiteTV;
+    private TextView companyTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +45,42 @@ public class UserDetails extends AppCompatActivity {
         *   for example one to read data from intent .
         *   other for assigning values .
         * */
-        Intent intent = getIntent();
-        User user = intent.getParcelableExtra("User"); // TODO : define the string as constants .
-        String id=user.getId();
-        String phone=user.getPhone();
+        User user = getUser();
+        assignValues(user);
+        showValues();
         // TODO : convert into class members instead of lolcal variables and make them reachable else where
-        TextView idTextView=findViewById(R.id.textView);
-        idTextView.setText(id);
-        TextView phoneTextView=findViewById(R.id.textView2);
-        phoneTextView.setText(phone);
+
+    }
+
+    private void assignValues(User user) {
+        name=user.getName();
+        username=user.getUsername();
+        email=user.getEmail();
+        address=user.getAddress();
+        phone=user.getPhone();
+        website=user.getWebsite();
+        company=user.getCompany();
+    }
+
+    private User getUser() {
+        Intent intent = getIntent();
+        return intent.getParcelableExtra(TAG);
+    }
+
+    private void showValues(){
+        nameTV=findViewById(R.id.name);
+        nameTV.setText(name);
+        usernameTV=findViewById(R.id.username);
+        usernameTV.setText(username);
+        emailTV=findViewById(R.id.email);
+        emailTV.setText(email);
+        addressTV=findViewById(R.id.address);
+        addressTV.setText(address.toString());
+        phoneTV=findViewById(R.id.phone);
+        phoneTV.setText(phone);
+        websiteTV=findViewById(R.id.website);
+        websiteTV.setText(website);
+        companyTV=findViewById(R.id.company);
+        companyTV.setText(company.toString());
     }
 }

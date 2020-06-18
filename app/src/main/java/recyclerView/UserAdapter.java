@@ -12,6 +12,9 @@ import java.util.List;
 import DataModels.User;
 import mainPackage.UserDetails;
 
+import static mainPackage.UserDetails.TAG;
+
+
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class UserAdapter extends
@@ -19,7 +22,7 @@ public class UserAdapter extends
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder {//TODO : make this class static .
+    public static class ViewHolder extends RecyclerView.ViewHolder {//TODO : make this class static .
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
@@ -75,7 +78,7 @@ public class UserAdapter extends
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(view.getContext(), UserDetails.class);
-                intent.putExtra("User",user); //TODO : intead of writing key 'Users' as a string , refer it as a constant in teh details screen .
+                intent.putExtra(TAG,user); //TODO : intead of writing key 'Users' as a string , refer it as a constant in teh details screen .
                 view.getContext().startActivity(intent);
             }
         });

@@ -1,6 +1,9 @@
 package DataModels;
 
-public class Address {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Address implements Parcelable {
     private String street;
     private String suite;
     private String city;
@@ -13,6 +16,33 @@ public class Address {
         this.city = city;
         this.zipcode = zipcode;
         this.geo = geo;
+    }
+
+    protected Address(Parcel in) {
+        street = in.readString();
+        suite = in.readString();
+        city = in.readString();
+        zipcode = in.readString();
+    }
+
+    public static final Creator<Address> CREATOR = new Creator<Address>() {
+        @Override
+        public Address createFromParcel(Parcel in) {
+            return new Address(in);
+        }
+
+        @Override
+        public Address[] newArray(int size) {
+            return new Address[size];
+        }
+    };
+
+    @Override
+    public String toString() {
+        return  street + '\'' +
+                 suite + '\n' +
+                 city + '\'' +
+                 zipcode + '\n';
     }
 
     public String getStreet() {
@@ -53,5 +83,18 @@ public class Address {
 
     public void setGeo(Geo geo) {
         this.geo = geo;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(street);
+        parcel.writeString(suite);
+        parcel.writeString(city);
+        parcel.writeString(zipcode);
     }
 }

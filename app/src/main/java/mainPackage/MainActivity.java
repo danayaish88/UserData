@@ -30,22 +30,18 @@ public class MainActivity extends AppCompatActivity {
         // for example let the reference to recycler here onCreate and call
         // getUsers in onStart or onResume .
 
-        getUsersFromApi();
-
-
-
         // Lookup the recyclerview in activity layout
          rvUsers = (RecyclerView) findViewById(R.id.rvUsers);
 
          //TODO : make sure to deleted commented out code
-        // Create adapter passing in the sample user data
-       // UserAdapter adapter = new UserAdapter(users);
-        // Attach the adapter to the recyclerview to populate items
-        //rvUsers.setAdapter(adapter);
-        // Set layout manager to position the items
-        //rvUsers.setLayoutManager(new LinearLayoutManager(this));
-        // That's all!
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getUsersFromApi();
     }
 
     private void getUsersFromApi() {
