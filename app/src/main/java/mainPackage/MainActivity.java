@@ -25,15 +25,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TODO : please make sure to move the creation of the retrofit object
-        // from this screen into the network package , since it might be needed
-        // in different screens and to avoid duplicate code .
-
-        getUsersFromApi();
         // TODO : please dont put all of your calls into onCreate
         // as there are multiple lifecycle callbacks for an activity .
         // for example let the reference to recycler here onCreate and call
         // getUsers in onStart or onResume .
+
+        getUsersFromApi();
+
 
 
         // Lookup the recyclerview in activity layout
@@ -51,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getUsersFromApi() {
+
         RetrofitC retrofit =new RetrofitC();
 
         Call<List<User>> call = retrofit.api.getUsers();
@@ -78,9 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
                 toast.show();
 
-                // TODO : please make sure to handle API failure ,
-                // for example try to show a toast using  Toast.makeText(...).show();
-                // that will inform the user about network failure .
             }
         });
     }
