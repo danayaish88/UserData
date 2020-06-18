@@ -1,5 +1,6 @@
 package mainPackage;
 
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,20 +28,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //TODO : please make sure to move the creation of the retrofit object
+        // from this screen into the network package , since it might be needed
+        // in different screens and to avoid duplicate code .
+
         Retrofit retrofit = getRetrofit();
 
         Api api = retrofit.create(Api.class);
 
         Call<List<User>> call = api.getUsers();
 
+        // TODO : please dont put all of your calls into onCreate
+        // as there are multiple lifecycle callbacks for an activity .
+        // for example let the reference to recycler here onCreate and call
+        // getUsers in onStart or onResume .
         callEnqueue(call);
 
 
-        //TODO : initial todo
 
         // Lookup the recyclerview in activity layout
          rvUsers = (RecyclerView) findViewById(R.id.rvUsers);
 
+         //TODO : make sure to deleted commented out code
 //        for(User u:users){
 //            Log.d("name:", String.valueOf(u.getName()));
 //
@@ -66,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
 
+                // TODO : please make sure to handle API failure ,
+                // for example try to show a toast using  Toast.makeText(...).show();
+                // that will inform the user about network failure .
             }
         });
     }
