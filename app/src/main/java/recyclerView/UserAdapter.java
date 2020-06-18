@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.userdata.R;
+
 import java.util.List;
+
 import DataModels.User;
 
 // Create the basic adapter extending from RecyclerView.Adapter
@@ -17,6 +19,8 @@ public class UserAdapter extends
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
+
+    // TODO : better practice requires inner classes to be public 'static'
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
