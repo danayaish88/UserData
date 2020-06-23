@@ -8,13 +8,16 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.userdata.R;
+
 import java.util.List;
+
 import DataModels.User;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import networking.RetrofitC;
 import recyclerView.UserAdapter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,44 +49,45 @@ public class MainActivity extends AppCompatActivity {
 
     private void getUsersFromApi() {
 
-        RetrofitC retrofit =new RetrofitC();
+         RetrofitC.getInstance()
+                 .getUsersFromApi()
+                 .subscribeOn(Schedulers.io())
+                 .observeOn(AndroidSchedulers.mainThread())
+                 .subscribe(new Observer<List<User>>() {
+                     @Override
+                     public void onSubscribe(Disposable d) {
 
-        Call<List<User>> call = retrofit.api.getUsers();
+                     }
 
-        callEnqueue(call);
+                     @Override
+                     public void onNext(List<User> users) {
+                         populateList(users);
 
+                     }
+
+                     @Override
+                     public void onError(Throwable e) {
+                         e.printStackTrace();
+
+                         Toast toast = Toast.makeText(getApplicationContext(),
+                                 "Error getting Data",
+                                 Toast.LENGTH_SHORT);
+
+                         toast.show();
+                     }
+
+                     @Override
+                     public void onComplete() {
+
+                     }
+                 });
     }
-
-    private void callEnqueue(Call<List<User>> call) {
-        call.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                List<User> users = response.body();
-                populateList(users);
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-
-                t.printStackTrace();
-
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Error getting Data",
-                        Toast.LENGTH_SHORT);
-
-                toast.show();
-
-            }
-        });
-    }
-
 
     private void populateList(List<User> users) {
         UserAdapter userAdapter = new UserAdapter(users);
         rvUsers.setLayoutManager(new LinearLayoutManager(this));
         rvUsers.setAdapter(userAdapter);
     }
-
 
 }
 
