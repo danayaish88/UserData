@@ -12,7 +12,7 @@ public class RetrofitC {
     private Api api;
     private Retrofit retrofit;
     private static RetrofitC single_instance = null;
-
+    private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
 
     public static RetrofitC getInstance()
     {
@@ -29,7 +29,7 @@ public class RetrofitC {
 
     private Retrofit getRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();

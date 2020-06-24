@@ -12,17 +12,15 @@ import com.example.userdata.R;
 import java.util.List;
 
 import DataModels.User;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import networking.RetrofitC;
+import contract.UserActivityContract;
+import presenter.UserPresenter;
 import recyclerView.UserAdapter;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements UserActivityContract.View {
 
     private RecyclerView rvUsers;
-
+    private UserPresenter mPresenter ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         // getUsers in onStart or onResume .
 
         // Lookup the recyclerview in activity layout
-         rvUsers = (RecyclerView) findViewById(R.id.rvUsers);
-
+         mPresenter=new UserPresenter(this);
          //TODO : make sure to deleted commented out code
 
 
@@ -44,48 +41,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        getUsersFromApi();
+        mPresenter.start();
     }
 
-    private void getUsersFromApi() {
-
-         RetrofitC.getInstance()
-                 .getUsersFromApi()
-                 .subscribeOn(Schedulers.io())
-                 .observeOn(AndroidSchedulers.mainThread())
-                 .subscribe(new Observer<List<User>>() {
-                     @Override
-                     public void onSubscribe(Disposable d) {
-
-                     }
-
-                     @Override
-                     public void onNext(List<User> users) {
-                         populateList(users);
-
-                     }
-
-                     @Override
-                     public void onError(Throwable e) {
-                         e.printStackTrace();
-
-                         Toast toast = Toast.makeText(getApplicationContext(),
-                                 "Error getting Data",
-                                 Toast.LENGTH_SHORT);
-
-                         toast.show();
-                     }
-
-                     @Override
-                     public void onComplete() {
-
-                     }
-                 });
-    }
-
-    private void populateList(List<User> users) {
-        UserAdapter userAdapter = new UserAdapter(users);
+    @Override
+    public void init() {
+        rvUsers = findViewById(R.id.rvUsers);
         rvUsers.setLayoutManager(new LinearLayoutManager(this));
+        mPresenter.loadUsers();
+    }
+
+    @Override
+    public void showError(String message) {
+
+        Toast toast = Toast.makeText(this,
+                "Error getting Data",
+                Toast.LENGTH_SHORT);
+
+        toast.show();
+    }
+
+    @Override
+    public void loadDataInList(List<User> users) {
+        UserAdapter userAdapter = new UserAdapter(users);
         rvUsers.setAdapter(userAdapter);
     }
 
