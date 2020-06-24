@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.userdata.R;
+import com.jakewharton.rxbinding2.view.RxView;
+
 import java.util.List;
 import DataModels.User;
-import contract.UserActivityContract;
+import io.reactivex.disposables.Disposable;
 import mainPackage.UserDetails;
 
 import static mainPackage.UserDetails.TAG;
@@ -59,15 +61,12 @@ public class UserAdapter extends
         TextView textViewEmail = viewHolder.emailTextView;
         textViewEmail.setText(user.getEmail());
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent= new Intent(view.getContext(), UserDetails.class);
-                intent.putExtra(TAG,user); //TODO : intead of writing key 'Users' as a string , refer it as a constant in teh details screen .
-                view.getContext().startActivity(intent);
-            }
-        });
-
+        Disposable d =RxView.clicks(viewHolder.itemView)
+                            .subscribe(obs->{
+                                Intent intent= new Intent(viewHolder.itemView.getContext(), UserDetails.class);
+                                intent.putExtra(TAG,user); //TODO : intead of writing key 'Users' as a string , refer it as a constant in teh details screen .
+                                viewHolder.itemView.getContext().startActivity(intent);
+                            });
     }
 
     @Override

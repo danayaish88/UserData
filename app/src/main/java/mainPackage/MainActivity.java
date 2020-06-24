@@ -32,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements UserActivityContr
         // getUsers in onStart or onResume .
 
         // Lookup the recyclerview in activity layout
-         mPresenter=new UserPresenter(this);
-         //TODO : make sure to deleted commented out code
+        rvUsers = findViewById(R.id.rvUsers);
+        mPresenter=new UserPresenter(this);
+        //TODO : make sure to deleted commented out code
 
 
     }
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements UserActivityContr
 
     @Override
     public void init() {
-        rvUsers = findViewById(R.id.rvUsers);
         rvUsers.setLayoutManager(new LinearLayoutManager(this));
         mPresenter.loadUsers();
     }
