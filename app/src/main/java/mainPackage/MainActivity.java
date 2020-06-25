@@ -4,17 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.userdata.R;
 
-import java.util.List;
-
 import DataModels.User;
 import contract.UserActivityContract;
 import presenter.UserPresenter;
 import recyclerView.UserAdapter;
+import static mainPackage.UserDetails.TAG;
 
 
 public class MainActivity extends AppCompatActivity implements UserActivityContract.View {
@@ -62,10 +62,22 @@ public class MainActivity extends AppCompatActivity implements UserActivityContr
     }
 
     @Override
-    public void loadDataInList(List<User> users) {
-        UserAdapter userAdapter = new UserAdapter(users);
+    public void loadDataInList() {
+        UserAdapter userAdapter = new UserAdapter(mPresenter);
         rvUsers.setAdapter(userAdapter);
     }
 
+    @Override
+    public void startUSerDetailsActivity(User user) {
+        Intent intent= new Intent(this, UserDetails.class);
+        intent.putExtra(TAG,user); //TODO : intead of writing key 'Users' as a string , refer it as a constant in teh details screen .
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.destroy();
+    }
 }
 

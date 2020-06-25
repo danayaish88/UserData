@@ -12,9 +12,15 @@ import networking.RetrofitC;
 
 public class UserPresenter implements UserActivityContract.Presenter {
     UserActivityContract.View mView;
+    List<User> userss;
+    Disposable disposable;
 
     public UserPresenter(UserActivityContract.View mView) {
         this.mView=mView;
+    }
+
+    public void setDisposable(Disposable disposable) {
+        this.disposable = disposable;
     }
 
     @Override
@@ -36,7 +42,8 @@ public class UserPresenter implements UserActivityContract.Presenter {
 
                     @Override
                     public void onNext(List<User> users) {
-                        mView.loadDataInList(users);
+                        mView.loadDataInList();
+                        userss=users;
                     }
 
                     @Override
@@ -50,4 +57,28 @@ public class UserPresenter implements UserActivityContract.Presenter {
                     }
                 });
     }
+
+    @Override
+    public void onBindRowView(UserActivityContract.rowView rowView, int position) {
+        User user=userss.get(position);
+        rowView.setName(user.getName());
+        rowView.setEmail(user.getEmail());
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return userss.size();
+    }
+
+    @Override
+    public void startUserDetailsActivity(int position) {
+        mView.startUSerDetailsActivity(userss.get(position));
+    }
+
+    @Override
+    public void destroy() {
+        disposable.dispose();
+    }
+
 }

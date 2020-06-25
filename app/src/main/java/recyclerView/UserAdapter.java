@@ -10,17 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.userdata.R;
 import com.jakewharton.rxbinding2.view.RxView;
 
-import java.util.List;
-import DataModels.User;
-import io.reactivex.disposables.Disposable;
-import mainPackage.UserDetails;
+import contract.UserActivityContract;
+import presenter.UserPresenter;
 
-import static mainPackage.UserDetails.TAG;
 
 public class UserAdapter extends
         RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {//TODO : make this class static .
+    public static class ViewHolder extends RecyclerView.ViewHolder implements UserActivityContract.rowView {//TODO : make this class static .
 
         public TextView nameTextView;
         public TextView emailTextView;
@@ -33,12 +30,21 @@ public class UserAdapter extends
             emailTextView = (TextView) itemView.findViewById(R.id.user_email);
         }
 
+        @Override
+        public void setName(String name) {
+            nameTextView.setText(name);
+        }
+
+        @Override
+        public void setEmail(String email) {
+            emailTextView.setText(email);
+        }
     }
 
-    private List<User> mUsers;
+    private UserPresenter presenter;
 
-    public UserAdapter(List<User> users) {
-        mUsers = users;
+    public UserAdapter(UserPresenter mPresenter) {
+        presenter=mPresenter;
     }
 
     @Override
@@ -54,23 +60,17 @@ public class UserAdapter extends
 
     @Override
     public void onBindViewHolder(final UserAdapter.ViewHolder viewHolder, int position) {
-        final User user = mUsers.get(position);
 
-        TextView textViewName = viewHolder.nameTextView;
-        textViewName.setText(user.getName());
-        TextView textViewEmail = viewHolder.emailTextView;
-        textViewEmail.setText(user.getEmail());
+        presenter.onBindRowView(viewHolder,position);
+        presenter.setDisposable(RxView.clicks(viewHolder.itemView)
+                .subscribe(obs->{
+                    presenter.startUserDetailsActivity(position);
+                }));
 
-        Disposable d =RxView.clicks(viewHolder.itemView)
-                            .subscribe(obs->{
-                                Intent intent= new Intent(viewHolder.itemView.getContext(), UserDetails.class);
-                                intent.putExtra(TAG,user); //TODO : intead of writing key 'Users' as a string , refer it as a constant in teh details screen .
-                                viewHolder.itemView.getContext().startActivity(intent);
-                            });
     }
 
     @Override
     public int getItemCount() {
-        return mUsers.size();
+        return presenter.getItemCount();
     }
 }

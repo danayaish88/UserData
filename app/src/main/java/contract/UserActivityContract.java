@@ -3,6 +3,7 @@ package contract;
 import java.util.List;
 
 import DataModels.User;
+import recyclerView.UserAdapter;
 
 public interface UserActivityContract {
 
@@ -11,8 +12,15 @@ public interface UserActivityContract {
 
         void showError(String message);
 
-        void loadDataInList(List<User> users);
+        void loadDataInList();
 
+        void startUSerDetailsActivity(User user);
+    }
+
+    interface rowView{
+        void setName(String name);
+
+        void setEmail(String email);
     }
 
 
@@ -20,6 +28,15 @@ public interface UserActivityContract {
         void start();
 
         void loadUsers();
+
+
+        void onBindRowView(UserActivityContract.rowView rowView, int position);
+
+        int getItemCount();
+
+        void startUserDetailsActivity(int position);
+
+        void destroy();
     }
 
 }
