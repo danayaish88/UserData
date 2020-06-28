@@ -9,16 +9,17 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitC {
+    private static RetrofitC singleInstance = null;//TODO : please follow convention ( camel casing )
+    private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
     private Api api;
     private Retrofit retrofit;
-    private static RetrofitC single_instance = null;//TODO : please follow convention ( camel casing )
-    private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
+
 
     public static RetrofitC getInstance() {
-        if (single_instance == null)
-            single_instance = new RetrofitC();
+        if (singleInstance == null)
+            singleInstance = new RetrofitC();
 
-        return single_instance;
+        return singleInstance;
     }
 
     private RetrofitC() {

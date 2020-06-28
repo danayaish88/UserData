@@ -10,9 +10,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import networking.RetrofitC;
 
-public class UserPresenter implements UserActivityContract.Presenter {
+public class UserPresenter {
     UserActivityContract.View mView;
-    List<User> userss;
     Disposable disposable;
 
     public UserPresenter(UserActivityContract.View mView) {
@@ -23,12 +22,10 @@ public class UserPresenter implements UserActivityContract.Presenter {
         this.disposable = disposable;
     }
 
-    @Override
     public void start() {
         mView.init();
     }
 
-    @Override
     public void loadUsers() {
         RetrofitC.getInstance()
                 .getUsersFromApi()
@@ -43,8 +40,10 @@ public class UserPresenter implements UserActivityContract.Presenter {
                     @Override
                     public void onNext(List<User> users) {
                         // TODO : please always check if mView is null or not
-                        mView.loadDataInList();
-                        userss=users; // TODO : no need hold ref if not used later , simply deliver to your view
+                        if(mView!=null){
+                            mView.loadDataInList(users);
+                        }
+                         // TODO : no need hold ref if not used later , simply deliver to your view
                     }
 
                     @Override
@@ -59,25 +58,6 @@ public class UserPresenter implements UserActivityContract.Presenter {
                 });
     }
 
-    @Override
-    public void onBindRowView(UserActivityContract.rowView rowView, int position) {
-        User user=userss.get(position);
-        rowView.setName(user.getName());
-        rowView.setEmail(user.getEmail());
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return userss.size();
-    }
-
-    @Override
-    public void startUserDetailsActivity(int position) {
-        mView.startUSerDetailsActivity(userss.get(position));
-    }
-
-    @Override
     public void destroy() {
         disposable.dispose();
     }

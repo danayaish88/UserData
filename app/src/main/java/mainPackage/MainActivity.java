@@ -4,42 +4,39 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.userdata.R;
 
+import java.util.List;
+
 import DataModels.User;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import contract.UserActivityContract;
 import presenter.UserPresenter;
 import recyclerView.UserAdapter;
 
-import static mainPackage.UserDetails.TAG;
-
 
 public class MainActivity extends AppCompatActivity implements UserActivityContract.View {
 
+    @BindView(R.id.rvUsers) RecyclerView rvUsers;
+
     //TODO : please start use ButterKnife library
-    private RecyclerView rvUsers;
-
-
     private UserPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
 
         // as there are multiple lifecycle callbacks for an activity .
         // for example let the reference to recycler here onCreate and call
         // getUsers in onStart or onResume .
-
-        // Lookup the recyclerview in activity layout
-        rvUsers = findViewById(R.id.rvUsers);
         mPresenter = new UserPresenter(this);
-
-
     }
 
     @Override
@@ -65,16 +62,9 @@ public class MainActivity extends AppCompatActivity implements UserActivityContr
     }
 
     @Override
-    public void loadDataInList() {
-        UserAdapter userAdapter = new UserAdapter(mPresenter);
+    public void loadDataInList(List<User> users) {
+        UserAdapter userAdapter = new UserAdapter(mPresenter,users);
         rvUsers.setAdapter(userAdapter);
-    }
-
-    @Override
-    public void startUSerDetailsActivity(User user) {
-        Intent intent = new Intent(this, UserDetails.class);
-        intent.putExtra(TAG, user); // TODO : by convention its KEY_USER ( use it instead of TAG )
-        startActivity(intent);
     }
 
     @Override
@@ -83,4 +73,3 @@ public class MainActivity extends AppCompatActivity implements UserActivityContr
         mPresenter.destroy();
     }
 }
-

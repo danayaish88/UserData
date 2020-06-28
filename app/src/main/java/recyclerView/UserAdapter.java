@@ -1,7 +1,6 @@
 package recyclerView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,45 +9,51 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.userdata.R;
 import com.jakewharton.rxbinding2.view.RxView;
 
-import contract.UserActivityContract;
+import java.util.List;
+
+import DataModels.User;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import mainPackage.UserDetails;
 import presenter.UserPresenter;
 
 
 public class UserAdapter extends
         RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements UserActivityContract.rowView { //TODO : remove rowView
+    private UserPresenter presenter;
+    private static List<User> mUsers;
+
+    public UserAdapter(UserPresenter mPresenter, List<User> users) {
+        presenter = mPresenter;
+        mUsers = users;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder { //TODO : remove rowView
 
 
-        public TextView nameTextView;
-        public TextView emailTextView;
+        @BindView(R.id.user_name) TextView nameTextView;
+        @BindView(R.id.user_email) TextView emailTextView;;
 
         public ViewHolder(View itemView) {
-
             super(itemView);
-
-            nameTextView = (TextView) itemView.findViewById(R.id.user_name);
-            emailTextView = (TextView) itemView.findViewById(R.id.user_email);
+            ButterKnife.bind(this,itemView);
         }
 
-        @Override
         public void setName(String name) {
             nameTextView.setText(name);
         }
 
-        @Override
         public void setEmail(String email) {
             emailTextView.setText(email);
         }
 
-
         // TODO : create method called bind and le it do the binding
-    }
-
-    private UserPresenter presenter;
-
-    public UserAdapter(UserPresenter mPresenter) {
-        presenter = mPresenter;
+        public void bind(int position) {
+            User user=mUsers.get(position);
+            this.setName(user.getName());
+            this.setEmail(user.getEmail());
+        }
     }
 
     @Override
@@ -67,20 +72,19 @@ public class UserAdapter extends
 
         //TODO : not a good idea to let your presenter bind view to its data .
         // try create a method called bind in your view holder that does so .
-        presenter.onBindRowView(viewHolder, position);
+        viewHolder.bind(position);
 
         presenter.setDisposable(RxView.clicks(viewHolder.itemView)
                 .subscribe(obs -> {
 
                     //TODO : instead of making the presenter start your activity ,
                     // create a static method in your destination activity .
-                    presenter.startUserDetailsActivity(position);
+                    UserDetails.startScreen(viewHolder.itemView.getContext(),mUsers.get(position));
                 }));
-
     }
 
     @Override
     public int getItemCount() {
-        return presenter.getItemCount();
+        return mUsers.size();
     }
 }

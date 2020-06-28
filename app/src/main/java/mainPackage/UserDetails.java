@@ -2,6 +2,7 @@ package mainPackage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -14,7 +15,7 @@ import DataModels.User;
 
 public class UserDetails extends AppCompatActivity {
 
-    public static final String TAG ="User" ;
+    public static final String KEY_USER ="User" ;
 
     private String name;
     private String username;
@@ -43,6 +44,12 @@ public class UserDetails extends AppCompatActivity {
 
     }
 
+    public static void startScreen(Context callingContext, User user){
+        Intent intent = new Intent(callingContext, UserDetails.class);
+        intent.putExtra(KEY_USER, user); // TODO : by convention its KEY_USER ( use it instead of TAG )
+        callingContext.startActivity(intent);
+    }
+
     private void assignValues(User user) {
         name=user.getName();
         username=user.getUsername();
@@ -55,7 +62,7 @@ public class UserDetails extends AppCompatActivity {
 
     private User getUser() {
         Intent intent = getIntent();
-        return intent.getParcelableExtra(TAG);
+        return intent.getParcelableExtra(KEY_USER);
     }
 
     private void showValues(){
