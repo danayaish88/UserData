@@ -11,11 +11,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitC {
     private Api api;
     private Retrofit retrofit;
-    private static RetrofitC single_instance = null;
+    private static RetrofitC single_instance = null;//TODO : please follow convention ( camel casing )
     private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
 
-    public static RetrofitC getInstance()
-    {
+    public static RetrofitC getInstance() {
         if (single_instance == null)
             single_instance = new RetrofitC();
 
@@ -23,8 +22,8 @@ public class RetrofitC {
     }
 
     private RetrofitC() {
-        retrofit= getRetrofit();
-        api=retrofit.create(Api.class);
+        retrofit = getRetrofit();
+        api = retrofit.create(Api.class);
     }
 
     private Retrofit getRetrofit() {
@@ -35,7 +34,7 @@ public class RetrofitC {
                 .build();
     }
 
-    public Observable<List<User>> getUsersFromApi(){
+    public Observable<List<User>> getUsersFromApi() {
         return api.getUsers();
     }
 }

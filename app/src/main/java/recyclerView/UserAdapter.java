@@ -17,7 +17,8 @@ import presenter.UserPresenter;
 public class UserAdapter extends
         RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements UserActivityContract.rowView {//TODO : make this class static .
+    public static class ViewHolder extends RecyclerView.ViewHolder implements UserActivityContract.rowView { //TODO : remove rowView
+
 
         public TextView nameTextView;
         public TextView emailTextView;
@@ -39,12 +40,15 @@ public class UserAdapter extends
         public void setEmail(String email) {
             emailTextView.setText(email);
         }
+
+
+        // TODO : create method called bind and le it do the binding
     }
 
     private UserPresenter presenter;
 
     public UserAdapter(UserPresenter mPresenter) {
-        presenter=mPresenter;
+        presenter = mPresenter;
     }
 
     @Override
@@ -61,9 +65,15 @@ public class UserAdapter extends
     @Override
     public void onBindViewHolder(final UserAdapter.ViewHolder viewHolder, int position) {
 
-        presenter.onBindRowView(viewHolder,position);
+        //TODO : not a good idea to let your presenter bind view to its data .
+        // try create a method called bind in your view holder that does so .
+        presenter.onBindRowView(viewHolder, position);
+
         presenter.setDisposable(RxView.clicks(viewHolder.itemView)
-                .subscribe(obs->{
+                .subscribe(obs -> {
+
+                    //TODO : instead of making the presenter start your activity ,
+                    // create a static method in your destination activity .
                     presenter.startUserDetailsActivity(position);
                 }));
 

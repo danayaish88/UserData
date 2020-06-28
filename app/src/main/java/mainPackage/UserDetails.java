@@ -37,18 +37,9 @@ public class UserDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
 
-        /* TODO : refactor
-        *  the code below is a mixture of reading data from intent
-        *  , refering to views and assigning values to the views .
-        *
-        *  a good practice is to split into methods .
-        *   for example one to read data from intent .
-        *   other for assigning values .
-        * */
         User user = getUser();
         assignValues(user);
         showValues();
-        // TODO : convert into class members instead of lolcal variables and make them reachable else where
 
     }
 

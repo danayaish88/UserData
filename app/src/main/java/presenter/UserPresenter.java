@@ -42,8 +42,9 @@ public class UserPresenter implements UserActivityContract.Presenter {
 
                     @Override
                     public void onNext(List<User> users) {
+                        // TODO : please always check if mView is null or not
                         mView.loadDataInList();
-                        userss=users;
+                        userss=users; // TODO : no need hold ref if not used later , simply deliver to your view
                     }
 
                     @Override
