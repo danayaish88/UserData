@@ -12,6 +12,8 @@ import com.example.userdata.R;
 import DataModels.Address;
 import DataModels.Company;
 import DataModels.User;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class UserDetails extends AppCompatActivity {
 
@@ -25,18 +27,19 @@ public class UserDetails extends AppCompatActivity {
     private String website;
     private Company company;
 
-    private TextView nameTV;
-    private TextView usernameTV;
-    private TextView emailTV;
-    private TextView addressTV;
-    private TextView phoneTV;
-    private TextView websiteTV;
-    private TextView companyTV;
+    @BindView(R.id.name) TextView nameTV;
+    @BindView(R.id.username) TextView usernameTV;
+    @BindView(R.id.email) TextView emailTV;
+    @BindView(R.id.address) TextView addressTV;
+    @BindView(R.id.phone) TextView phoneTV;
+    @BindView(R.id.website) TextView websiteTV;
+    @BindView(R.id.company) TextView companyTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
+        ButterKnife.bind(this);
 
         User user = getUser();
         assignValues(user);
@@ -66,19 +69,12 @@ public class UserDetails extends AppCompatActivity {
     }
 
     private void showValues(){
-        nameTV=findViewById(R.id.name);
         nameTV.setText(name);
-        usernameTV=findViewById(R.id.username);
         usernameTV.setText(username);
-        emailTV=findViewById(R.id.email);
         emailTV.setText(email);
-        addressTV=findViewById(R.id.address);
         addressTV.setText(address.toString());
-        phoneTV=findViewById(R.id.phone);
         phoneTV.setText(phone);
-        websiteTV=findViewById(R.id.website);
         websiteTV.setText(website);
-        companyTV=findViewById(R.id.company);
         companyTV.setText(company.toString());
     }
 }
