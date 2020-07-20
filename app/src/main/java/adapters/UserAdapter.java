@@ -1,4 +1,4 @@
-package recyclerView;
+package adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import java.util.List;
 import DataModels.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mainPackage.UserDetails;
+import mainPackage.UserDetailsActivity;
 import presenter.UserPresenter;
 
 
@@ -79,7 +79,7 @@ public class UserAdapter extends
 
                     //TODO : instead of making the presenter start your activity ,
                     // create a static method in your destination activity .
-                    UserDetails.startScreen(viewHolder.itemView.getContext(),mUsers.get(position));
+                    UserDetailsActivity.startScreen(viewHolder.itemView.getContext(),mUsers.get(position));
                 }));
     }
 

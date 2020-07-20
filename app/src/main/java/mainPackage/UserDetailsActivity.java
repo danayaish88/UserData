@@ -15,7 +15,7 @@ import DataModels.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserDetails extends AppCompatActivity {
+public class UserDetailsActivity extends AppCompatActivity {
 
     public static final String KEY_USER ="User" ;
 
@@ -47,8 +47,8 @@ public class UserDetails extends AppCompatActivity {
 
     }
 
-    public static void startScreen(Context callingContext, User user){
-        Intent intent = new Intent(callingContext, UserDetails.class);
+    public static void startScreen(Context callingContext, User user) {
+        Intent intent = new Intent(callingContext, UserDetailsActivity.class);
         intent.putExtra(KEY_USER, user); // TODO : by convention its KEY_USER ( use it instead of TAG )
         callingContext.startActivity(intent);
     }
@@ -68,7 +68,7 @@ public class UserDetails extends AppCompatActivity {
         return intent.getParcelableExtra(KEY_USER);
     }
 
-    private void showValues(){
+    private void showValues() {
         nameTV.setText(name);
         usernameTV.setText(username);
         emailTV.setText(email);

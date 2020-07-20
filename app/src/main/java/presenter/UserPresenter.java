@@ -1,5 +1,7 @@
 package presenter;
 
+import android.util.Log;
+
 import java.util.List;
 
 import DataModels.User;
@@ -34,6 +36,7 @@ public class UserPresenter {
                 .subscribe(new Observer<List<User>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        Log.d("TAG", "onSubscribe: ");
 
                     }
 
@@ -42,6 +45,7 @@ public class UserPresenter {
                         // TODO : please always check if mView is null or not
                         if(mView!=null){
                             mView.loadDataInList(users);
+                            Log.d("TAG", "onNext: ");
                         }
                          // TODO : no need hold ref if not used later , simply deliver to your view
                     }
@@ -49,17 +53,21 @@ public class UserPresenter {
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.getMessage());
+                        Log.d("TAG", "onError: " + e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
+                        Log.d("TAG", "onComplete: ");
 
                     }
                 });
     }
 
     public void destroy() {
-        disposable.dispose();
+        if(disposable != null) {
+            disposable.dispose();
+        }
     }
 
 }
