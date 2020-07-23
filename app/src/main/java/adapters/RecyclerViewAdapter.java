@@ -14,17 +14,16 @@ import java.util.List;
 import DataModels.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mainPackage.UserDetailsActivity;
 import presenter.UserPresenter;
 
 
-public class UserAdapter extends
-        RecyclerView.Adapter<UserAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends
+        RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private UserPresenter presenter;
     private static List<User> mUsers;
 
-    public UserAdapter(UserPresenter mPresenter, List<User> users) {
+    public RecyclerViewAdapter(UserPresenter mPresenter, List<User> users) {
         presenter = mPresenter;
         mUsers = users;
     }
@@ -37,7 +36,7 @@ public class UserAdapter extends
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void setName(String name) {
@@ -57,7 +56,7 @@ public class UserAdapter extends
     }
 
     @Override
-    public UserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -68,7 +67,7 @@ public class UserAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(final UserAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final RecyclerViewAdapter.ViewHolder viewHolder, int position) {
 
         //TODO : not a good idea to let your presenter bind view to its data .
         // try create a method called bind in your view holder that does so .
@@ -79,7 +78,7 @@ public class UserAdapter extends
 
                     //TODO : instead of making the presenter start your activity ,
                     // create a static method in your destination activity .
-                    UserDetailsActivity.startScreen(viewHolder.itemView.getContext(),mUsers.get(position));
+                    //UserDetailsActivity.startScreen(viewHolder.itemView.getContext(),mUsers.get(position));
                 }));
     }
 

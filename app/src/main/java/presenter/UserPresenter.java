@@ -5,7 +5,7 @@ import android.util.Log;
 import java.util.List;
 
 import DataModels.User;
-import contract.UserActivityContract;
+import contract.UserFragmentContract;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -13,10 +13,10 @@ import io.reactivex.schedulers.Schedulers;
 import networking.RetrofitC;
 
 public class UserPresenter {
-    UserActivityContract.View mView;
+    UserFragmentContract.View mView;
     Disposable disposable;
 
-    public UserPresenter(UserActivityContract.View mView) {
+    public UserPresenter(UserFragmentContract.View mView) {
         this.mView=mView;
     }
 
@@ -44,7 +44,7 @@ public class UserPresenter {
                     public void onNext(List<User> users) {
                         // TODO : please always check if mView is null or not
                         if(mView!=null){
-                            mView.loadDataInList(users);
+                            //mView.loadDataInList(users);
                             Log.d("TAG", "onNext: ");
                         }
                          // TODO : no need hold ref if not used later , simply deliver to your view
@@ -70,4 +70,11 @@ public class UserPresenter {
         }
     }
 
+    public void loadIds(List<Integer> data) {
+        mView.loadIdInList(data);
+    }
+
+    public void sendId(Integer id) {
+        mView.sendId(id);
+    }
 }

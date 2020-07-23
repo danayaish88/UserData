@@ -61,8 +61,7 @@ dependencies {
     implementation 'com.jakewharton.rxbinding2:rxbinding-design:2.0.0'
 
     //Butterknife
-    implementation 'com.jakewharton:butterknife:10.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
-
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
 }

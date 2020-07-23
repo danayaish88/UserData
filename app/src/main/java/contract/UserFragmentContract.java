@@ -4,7 +4,7 @@ import java.util.List;
 
 import DataModels.User;
 
-public interface UserActivityContract {
+public interface UserFragmentContract {
 
     interface View {
         void init();
@@ -12,6 +12,10 @@ public interface UserActivityContract {
         void showError(String message);
 
         void loadDataInList(List<User> users);
+
+        void loadIdInList(List<Integer> data);
+
+        void sendId(Integer id);
     }
 
     // TODO : not needed . dont use MVP on inflating row items ( let it be a high level concept ) .
