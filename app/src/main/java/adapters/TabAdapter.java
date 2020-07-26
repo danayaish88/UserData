@@ -11,18 +11,11 @@ import mainPackage.UserListFragment;
 
 public class TabAdapter extends FragmentStatePagerAdapter {
 
-    int tabCount = 0;
-    int selectedUserId = 1;
 
-    public TabAdapter(@NonNull FragmentManager fm, int tabCount) {
-        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        this.tabCount = tabCount;
-    }
+    private static final int NUM_OF_TABS = 2;
 
-    public TabAdapter(@NonNull FragmentManager fm, int tabCount, int selectedUserId) {
+    public TabAdapter(@NonNull FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        this.tabCount = tabCount;
-        this.selectedUserId = selectedUserId;
     }
 
     @NonNull
@@ -44,7 +37,7 @@ public class TabAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return tabCount;
+        return NUM_OF_TABS;
     }
 
     @Nullable

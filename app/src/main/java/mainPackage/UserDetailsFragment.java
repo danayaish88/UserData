@@ -1,12 +1,11 @@
 package mainPackage;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,22 +65,15 @@ public class UserDetailsFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        id = getUserId();
-        Log.d("TAG", "onCreate: ");
-        //assign Values of user with the specified id
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_details, container, false);
         ButterKnife.bind(this, view);
+
         //showValues();
-        nameTV.setText(String.valueOf(id));
-        Log.d("TAG", "onCreateView: ");
+
+        setId();
         return view;
     }
 
@@ -95,13 +87,6 @@ public class UserDetailsFragment extends Fragment {
         company=user.getCompany();
     }
 
-    private int getUserId() {
-        if(getArguments() != null){
-            return getArguments().getInt(ARG_USER_ID);
-        }
-        return 1;
-    }
-
     private void showValues() {
         nameTV.setText(name);
         usernameTV.setText(username);
@@ -112,9 +97,14 @@ public class UserDetailsFragment extends Fragment {
         companyTV.setText(company.toString());
     }
 
-
-
-    public void setId(Integer id) {
-        nameTV.setText(String.valueOf(id));
+    public void setId() {
+        if(getArguments() != null){
+            Integer id = getArguments().getInt(ARG_USER_ID);
+            nameTV.setText(String.valueOf(id));
+        }else{
+            //default value for id = 1
+            nameTV.setText(String.valueOf(id));
+        }
     }
+
 }

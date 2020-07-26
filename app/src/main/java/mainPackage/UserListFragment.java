@@ -40,7 +40,7 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
 
 
     public interface OnHeadlineSelectedListener {
-        public void onArticleSelected(Integer position);
+        public void onUserSelected(Integer position);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
 
     @Override
     public void sendId(Integer id) {
-        callback.onArticleSelected(id);
+        callback.onUserSelected(id);
     }
 
     @Override
