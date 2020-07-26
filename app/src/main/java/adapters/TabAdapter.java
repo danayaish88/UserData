@@ -6,13 +6,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import mainPackage.UserDetailsFragment;
+import mainPackage.ParentDetailsFragment;
+
 import mainPackage.UserListFragment;
 
 public class TabAdapter extends FragmentStatePagerAdapter {
 
 
     private static final int NUM_OF_TABS = 2;
+    private static final Integer DEFAULT_USER = 1;
 
     public TabAdapter(@NonNull FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -27,7 +29,7 @@ public class TabAdapter extends FragmentStatePagerAdapter {
                 fragment = UserListFragment.getInstance();
                 break;
             case 1:
-                fragment = UserDetailsFragment.getInstance();
+                fragment = ParentDetailsFragment.newInstance(DEFAULT_USER);
                 break;
             default:
                 break;

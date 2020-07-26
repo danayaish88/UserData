@@ -57,7 +57,7 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
 
     private void initList() {
         ids = new ArrayList<>();
-        for(int i = 0; i < 11; i ++){
+        for(int i = 0; i < 10; i ++){
             ids.add(i);
         }
     }

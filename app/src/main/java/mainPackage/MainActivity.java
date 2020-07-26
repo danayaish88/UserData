@@ -12,8 +12,6 @@ import adapters.TabAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static mainPackage.UserDetailsFragment.ARG_USER_ID;
-
 
 public class MainActivity extends AppCompatActivity implements UserListFragment.OnHeadlineSelectedListener{
 
@@ -34,20 +32,12 @@ public class MainActivity extends AppCompatActivity implements UserListFragment.
         pagerAdapter = new TabAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(pager);
-
     }
 
     @Override
     public void onUserSelected(Integer id) {
-        UserDetailsFragment userDetailsFragment = UserDetailsFragment.getInstance();
-        setSelectedId(id, userDetailsFragment);
+        ParentDetailsFragment parentDetailsFragment = ParentDetailsFragment.newInstance(id);
+        parentDetailsFragment.setUserId();
         pager.setCurrentItem(USER_DETAILS_INDEX);
-    }
-
-    private void setSelectedId(Integer id, UserDetailsFragment userDetailsFragment) {
-        Bundle args = new Bundle();
-        args.putInt(ARG_USER_ID, id);
-        userDetailsFragment.setArguments(args);
-        userDetailsFragment.setId();
     }
 }

@@ -3,8 +3,6 @@ package mainPackage;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class UserDetailsFragment extends Fragment {
+public class ChildDetailsFragment extends Fragment {
 
 
-    private static UserDetailsFragment singleFragment = null;
     public static final String ARG_USER_ID = "userId";
     private int id = 1;
 
@@ -50,25 +47,23 @@ public class UserDetailsFragment extends Fragment {
     @BindView(R.id.company)
     TextView companyTV;
 
-    private UserDetailsFragment() {
+    private ChildDetailsFragment() {
         // Required empty constructor
     }
 
-    public static UserDetailsFragment getInstance() {
-        if(singleFragment == null){
-            singleFragment = new UserDetailsFragment();
-            //Bundle args = new Bundle();
-            //args.putInt(ARG_USER_ID, id);
-            //singleFragment.setArguments(args);
-        }
-        return singleFragment;
+    public static ChildDetailsFragment getInstance(int id) {
+         ChildDetailsFragment childDetailsFragment = new ChildDetailsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARG_USER_ID, id);
+        childDetailsFragment.setArguments(bundle);
+        return childDetailsFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_user_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_child_details, container, false);
         ButterKnife.bind(this, view);
 
         //showValues();
@@ -76,6 +71,7 @@ public class UserDetailsFragment extends Fragment {
         setId();
         return view;
     }
+
 
     private void assignValues(User user) {
         name=user.getName();
@@ -107,4 +103,10 @@ public class UserDetailsFragment extends Fragment {
         }
     }
 
+    public void setSelectedId(Integer id) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_USER_ID, id);
+        setArguments(args);
+        setId();
+    }
 }
