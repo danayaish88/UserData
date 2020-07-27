@@ -11,11 +11,11 @@ public interface UserFragmentContract {
 
         void showError(String message);
 
-        void loadDataInList(List<User> users);
-
-        //void loadIdInList(List<Integer> data);
-
         void sendId(Integer id);
+    }
+
+    interface ActivityView {
+        void onListReady(List<User> users);
     }
 
     // TODO : not needed . dont use MVP on inflating row items ( let it be a high level concept ) .

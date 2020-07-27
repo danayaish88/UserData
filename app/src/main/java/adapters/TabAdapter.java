@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import java.util.List;
+
+import DataModels.User;
 import mainPackage.ParentDetailsFragment;
 
 import mainPackage.UserListFragment;
@@ -15,9 +18,11 @@ public class TabAdapter extends FragmentStatePagerAdapter {
 
     private static final int NUM_OF_TABS = 2;
     private static final Integer DEFAULT_USER_ID = 1;
+    private final List<User> users;
 
-    public TabAdapter(@NonNull FragmentManager fm) {
+    public TabAdapter(@NonNull FragmentManager fm, List<User> users) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        this.users = users;
     }
 
     @NonNull
@@ -26,10 +31,10 @@ public class TabAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch (position){
             case 0:
-                fragment = UserListFragment.getInstance();
+                fragment = UserListFragment.getInstance(users);
                 break;
             case 1:
-                fragment = ParentDetailsFragment.getInstance(DEFAULT_USER_ID);
+                fragment = ParentDetailsFragment.getInstance(DEFAULT_USER_ID, users);
                 break;
             default:
                 break;

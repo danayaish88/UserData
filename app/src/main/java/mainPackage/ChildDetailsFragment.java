@@ -2,10 +2,8 @@ package mainPackage;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import DataModels.Company;
 import DataModels.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import presenter.UserPresenter;
 
 
 public class ChildDetailsFragment extends Fragment {
@@ -57,9 +54,8 @@ public class ChildDetailsFragment extends Fragment {
         // Required empty constructor
     }
 
-    public static ChildDetailsFragment getInstance(int id) {
+    public static ChildDetailsFragment getInstance(int id, List<User> users) {
         ChildDetailsFragment childDetailsFragment = new ChildDetailsFragment();
-        users =  UserPresenter.getIntance().getUsersList();
 
         if(users != null){
             Bundle bundle = new Bundle();
@@ -78,7 +74,6 @@ public class ChildDetailsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         User u = getUser();
-
         if(u != null){
             assignValues(u);
             showValues();

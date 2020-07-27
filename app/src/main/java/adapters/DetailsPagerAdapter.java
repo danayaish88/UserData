@@ -15,20 +15,21 @@ import mainPackage.ChildDetailsFragment;
 public class DetailsPagerAdapter extends FragmentStatePagerAdapter {
 
 
-    private static final int NUM_OF_USERS = 10;
+    private List<User> users;
 
-    public DetailsPagerAdapter(@NonNull FragmentManager fm) {
+    public DetailsPagerAdapter(@NonNull FragmentManager fm, List<User> users) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        this.users = users;
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return ChildDetailsFragment.getInstance(position);
+        return ChildDetailsFragment.getInstance(position, users);
     }
 
     @Override
     public int getCount() {
-        return NUM_OF_USERS;
+        return users != null? users.size() : 0 ;
     }
 }

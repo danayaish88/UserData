@@ -18,7 +18,6 @@ import DataModels.User;
 import adapters.DetailsPagerAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import presenter.UserPresenter;
 
 
 public class ParentDetailsFragment extends Fragment {
@@ -26,19 +25,20 @@ public class ParentDetailsFragment extends Fragment {
 
     public static ParentDetailsFragment singleFragment = null;
     private static final String USER_ID = "userId" ;
+    private final List<User> users;
 
     private Integer id = 1;
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-    public ParentDetailsFragment() {
-        // Required empty public constructor
+    public ParentDetailsFragment(List<User> users) {
+        this.users = users;
     }
 
-    public static ParentDetailsFragment getInstance(Integer id) {
+    public static ParentDetailsFragment getInstance(Integer id, List<User> users) {
         if(singleFragment == null){
-            singleFragment = new ParentDetailsFragment();
+            singleFragment = new ParentDetailsFragment(users);
         }
 
         Bundle args = new Bundle();
@@ -73,13 +73,8 @@ public class ParentDetailsFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
     private PagerAdapter buildAdapter() {
-        return new DetailsPagerAdapter(getChildFragmentManager());
+        return new DetailsPagerAdapter(getChildFragmentManager(), users);
     }
 
     public void goToUserId() {

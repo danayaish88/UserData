@@ -32,7 +32,7 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
     RecyclerView rvUsers;
 
     private UserPresenter mPresenter;
-    private ArrayList<Integer> ids;
+    private static List<User> userList;
 
     OnHeadlineSelectedListener callback;
 
@@ -47,13 +47,6 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
         callback = (OnHeadlineSelectedListener) context;
     }
 
-    private void initList() {
-        ids = new ArrayList<>();
-        for(int i = 0; i < 10; i ++){
-            ids.add(i);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,13 +55,17 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
         ButterKnife.bind(this, view);
 
         mPresenter = UserPresenter.getIntance();
-        mPresenter.loadUsers();
         mPresenter.setView(this);
+
+        if(userList != null){
+            loadDataInList(userList);
+        }
 
         return view;
     }
 
-    public static UserListFragment getInstance() {
+    public static UserListFragment getInstance(List<User> users) {
+        userList = users;
         return new UserListFragment();
     }
 
@@ -81,8 +78,7 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
     @Override
     public void init() {
         rvUsers.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        //mPresenter.loadUsers();
-        //mPresenter.loadIds(ids);
+
     }
 
     @Override
@@ -94,7 +90,6 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
         toast.show();
     }
 
-    @Override
     public void loadDataInList(List<User> users) {
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mPresenter,users);
         rvUsers.setAdapter(recyclerViewAdapter);
