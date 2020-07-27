@@ -1,7 +1,5 @@
 package presenter;
 
-import android.util.Log;
-
 import java.util.List;
 
 import DataModels.User;
@@ -13,10 +11,24 @@ import io.reactivex.schedulers.Schedulers;
 import networking.RetrofitC;
 
 public class UserPresenter {
-    UserFragmentContract.View mView;
-    Disposable disposable;
 
-    public UserPresenter(UserFragmentContract.View mView) {
+    private static UserPresenter singleInstance = null;
+
+    private UserFragmentContract.View mView;
+    private Disposable disposable;
+    private List<User> usersList = null;
+
+    public static UserPresenter getIntance() {
+        if(singleInstance == null){
+            singleInstance = new UserPresenter();
+        }
+        return singleInstance;
+    }
+
+    private UserPresenter() {
+    }
+
+    public void setView(UserFragmentContract.View mView) {
         this.mView=mView;
     }
 
@@ -36,7 +48,6 @@ public class UserPresenter {
                 .subscribe(new Observer<List<User>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d("TAG", "onSubscribe: ");
 
                     }
 
@@ -44,21 +55,19 @@ public class UserPresenter {
                     public void onNext(List<User> users) {
                         // TODO : please always check if mView is null or not
                         if(mView!=null){
-                            //mView.loadDataInList(users);
-                            Log.d("TAG", "onNext: ");
+                            mView.loadDataInList(users);
                         }
+                        usersList = users;
                          // TODO : no need hold ref if not used later , simply deliver to your view
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.getMessage());
-                        Log.d("TAG", "onError: " + e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d("TAG", "onComplete: ");
 
                     }
                 });
@@ -70,11 +79,12 @@ public class UserPresenter {
         }
     }
 
-    public void loadIds(List<Integer> data) {
-        mView.loadIdInList(data);
-    }
 
     public void sendId(Integer id) {
         mView.sendId(id);
+    }
+
+    public List<User> getUsersList() {
+        return usersList;
     }
 }

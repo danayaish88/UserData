@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,7 @@ public class RecyclerViewAdapter extends
 
                     //TODO : instead of making the presenter start your activity ,
                     // create a static method in your destination activity .
-                    //UserDetailsActivity.startScreen(viewHolder.itemView.getContext(),mUsers.get(position));
+                    presenter.sendId(mUsers.get(position).getId());
                 }));
     }
 

@@ -29,15 +29,20 @@ public class MainActivity extends AppCompatActivity implements UserListFragment.
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setPagerAdapter();
+
+        tabLayout.setupWithViewPager(pager);
+    }
+
+    private void setPagerAdapter() {
         pagerAdapter = new TabAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(pager);
     }
 
     @Override
     public void onUserSelected(Integer id) {
-        ParentDetailsFragment parentDetailsFragment = ParentDetailsFragment.newInstance(id);
-        parentDetailsFragment.setUserId();
+        ParentDetailsFragment parentDetailsFragment = ParentDetailsFragment.getInstance(id);
+        parentDetailsFragment.goToUserId();
         pager.setCurrentItem(USER_DETAILS_INDEX);
     }
 }

@@ -2,8 +2,10 @@ package mainPackage;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +13,21 @@ import android.widget.TextView;
 
 import com.example.userdata.R;
 
+import java.util.List;
+
 import DataModels.Address;
 import DataModels.Company;
 import DataModels.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import presenter.UserPresenter;
 
 
 public class ChildDetailsFragment extends Fragment {
 
 
-    public static final String ARG_USER_ID = "userId";
-    private int id = 1;
+    public static final String ARG_USER = "user";
+    private static List<User> users;
 
     private String name;
     private String username;
@@ -31,6 +36,7 @@ public class ChildDetailsFragment extends Fragment {
     private String phone;
     private String website;
     private Company company;
+
 
     @BindView(R.id.name)
     TextView nameTV;
@@ -52,12 +58,17 @@ public class ChildDetailsFragment extends Fragment {
     }
 
     public static ChildDetailsFragment getInstance(int id) {
-         ChildDetailsFragment childDetailsFragment = new ChildDetailsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(ARG_USER_ID, id);
-        childDetailsFragment.setArguments(bundle);
+        ChildDetailsFragment childDetailsFragment = new ChildDetailsFragment();
+        users =  UserPresenter.getIntance().getUsersList();
+
+        if(users != null){
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(ARG_USER, users.get(id));
+            childDetailsFragment.setArguments(bundle);
+        }
         return childDetailsFragment;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,9 +77,13 @@ public class ChildDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_child_details, container, false);
         ButterKnife.bind(this, view);
 
-        //showValues();
+        User u = getUser();
 
-        setId();
+        if(u != null){
+            assignValues(u);
+            showValues();
+        }
+
         return view;
     }
 
@@ -93,20 +108,13 @@ public class ChildDetailsFragment extends Fragment {
         companyTV.setText(company.toString());
     }
 
-    public void setId() {
+    public User getUser() {
+        User user = null;
+
         if(getArguments() != null){
-            Integer id = getArguments().getInt(ARG_USER_ID);
-            nameTV.setText(String.valueOf(id));
-        }else{
-            //default value for id = 1
-            nameTV.setText(String.valueOf(id));
+            user = getArguments().getParcelable(ARG_USER);
         }
+        return user;
     }
 
-    public void setSelectedId(Integer id) {
-        Bundle args = new Bundle();
-        args.putInt(ARG_USER_ID, id);
-        setArguments(args);
-        setId();
-    }
 }

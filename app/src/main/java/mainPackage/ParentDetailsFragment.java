@@ -12,15 +12,20 @@ import android.view.ViewGroup;
 
 import com.example.userdata.R;
 
+import java.util.List;
+
+import DataModels.User;
 import adapters.DetailsPagerAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import presenter.UserPresenter;
 
 
 public class ParentDetailsFragment extends Fragment {
 
-    private static final String USER_ID = "userId" ;
+
     public static ParentDetailsFragment singleFragment = null;
+    private static final String USER_ID = "userId" ;
 
     private Integer id = 1;
 
@@ -31,10 +36,11 @@ public class ParentDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ParentDetailsFragment newInstance(Integer id) {
+    public static ParentDetailsFragment getInstance(Integer id) {
         if(singleFragment == null){
             singleFragment = new ParentDetailsFragment();
         }
+
         Bundle args = new Bundle();
         args.putInt(USER_ID, id);
         singleFragment.setArguments(args);
@@ -63,16 +69,22 @@ public class ParentDetailsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         viewPager.setAdapter(buildAdapter());
-        viewPager.setCurrentItem(id);
+        viewPager.setCurrentItem(id-1);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     private PagerAdapter buildAdapter() {
         return new DetailsPagerAdapter(getChildFragmentManager());
     }
 
-    public void setUserId() {
+    public void goToUserId() {
         Integer id = getUserId();
-        viewPager.setCurrentItem(id);
+        viewPager.setCurrentItem(id-1);
     }
+
 }

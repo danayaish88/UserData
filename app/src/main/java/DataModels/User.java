@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class User implements Parcelable {
-    private String id;
+    private Integer id;
     private String name;
     private String username;
     private String email;
@@ -13,7 +13,7 @@ public class User implements Parcelable {
     private Address address;
     private Company company;
 
-    public User(String id, String name, String username, String email, String phone,
+    public User(Integer id, String name, String username, String email, String phone,
                 String website, Address address, Company company) {
         this.id = id;
         this.name = name;
@@ -26,7 +26,7 @@ public class User implements Parcelable {
     }
 
     protected User(Parcel in) {
-        id = in.readString();
+        id = in.readInt();
         name = in.readString();
         username = in.readString();
         email = in.readString();
@@ -39,7 +39,7 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeInt(id);
         dest.writeString(name);
         dest.writeString(username);
         dest.writeString(email);
@@ -66,7 +66,7 @@ public class User implements Parcelable {
         }
     };
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -90,7 +90,7 @@ public class User implements Parcelable {
         return website;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

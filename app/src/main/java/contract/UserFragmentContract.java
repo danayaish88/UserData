@@ -13,7 +13,7 @@ public interface UserFragmentContract {
 
         void loadDataInList(List<User> users);
 
-        void loadIdInList(List<Integer> data);
+        //void loadIdInList(List<Integer> data);
 
         void sendId(Integer id);
     }

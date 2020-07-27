@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataModels.User;
-import adapters.IdsAdapter;
 import adapters.RecyclerViewAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,12 +42,6 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initList();
-    }
-
-    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         callback = (OnHeadlineSelectedListener) context;
@@ -69,7 +61,9 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
         View view = inflater.inflate(R.layout.fragment_user_list, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = new UserPresenter(this);
+        mPresenter = UserPresenter.getIntance();
+        mPresenter.loadUsers();
+        mPresenter.setView(this);
 
         return view;
     }
@@ -88,7 +82,7 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
     public void init() {
         rvUsers.setLayoutManager(new LinearLayoutManager(this.getContext()));
         //mPresenter.loadUsers();
-        mPresenter.loadIds(ids);
+        //mPresenter.loadIds(ids);
     }
 
     @Override
@@ -104,11 +98,6 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
     public void loadDataInList(List<User> users) {
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mPresenter,users);
         rvUsers.setAdapter(recyclerViewAdapter);
-    }
-
-    public void loadIdInList(List<Integer> data) {
-        IdsAdapter idsAdapter = new IdsAdapter(mPresenter,data);
-        rvUsers.setAdapter(idsAdapter);
     }
 
     @Override
