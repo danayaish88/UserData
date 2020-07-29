@@ -52,12 +52,14 @@ public class ChildDetailsFragment extends Fragment {
 
     private ChildDetailsFragment() {
         // Required empty constructor
+
+        //TODO : singelton instance
     }
 
     public static ChildDetailsFragment getInstance(int id, List<User> users) {
         ChildDetailsFragment childDetailsFragment = new ChildDetailsFragment();
 
-        if(users != null){
+        if(users != null){ // TODO: refactor into method
             Bundle bundle = new Bundle();
             bundle.putParcelable(ARG_USER, users.get(id));
             childDetailsFragment.setArguments(bundle);
@@ -73,8 +75,8 @@ public class ChildDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_child_details, container, false);
         ButterKnife.bind(this, view);
 
-        User u = getUser();
-        if(u != null){
+        User u = getUser();///TODO : u !?!?!?!?
+        if(u != null){ //
             assignValues(u);
             showValues();
         }

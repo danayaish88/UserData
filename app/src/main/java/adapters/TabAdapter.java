@@ -30,6 +30,7 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         Fragment fragment = null;
         switch (position){
+            //TODO : use constants instead on indecies
             case 0:
                 fragment = UserListFragment.getInstance(users);
                 break;
@@ -39,6 +40,9 @@ public class TabAdapter extends FragmentStatePagerAdapter {
             default:
                 break;
         }
+
+        //TODO : since the method assumes a non0null fragment , start with default return and check
+        // upon position .
         return fragment;
     }
 
@@ -51,9 +55,10 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         CharSequence charSequence = "";
+        //TODO : use constants
         switch (position){
             case 0:
-                charSequence = "List";
+                charSequence = "List"; // TODO : rename to  Users
                 break;
             case 1:
                 charSequence = "Details";

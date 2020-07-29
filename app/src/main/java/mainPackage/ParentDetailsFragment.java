@@ -37,6 +37,8 @@ public class ParentDetailsFragment extends Fragment {
     }
 
     public static ParentDetailsFragment getInstance(Integer id, List<User> users) {
+
+        //TODO : this is not te one i need to be sigelton , its the child details  .
         if(singleFragment == null){
             singleFragment = new ParentDetailsFragment(users);
         }
@@ -69,7 +71,7 @@ public class ParentDetailsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         viewPager.setAdapter(buildAdapter());
-        viewPager.setCurrentItem(id-1);
+        viewPager.setCurrentItem(id-1); //TODO : NO , get index using id
         return view;
     }
 
@@ -79,7 +81,7 @@ public class ParentDetailsFragment extends Fragment {
 
     public void goToUserId() {
         Integer id = getUserId();
-        viewPager.setCurrentItem(id-1);
+        viewPager.setCurrentItem(id-1);//TODO : NO , get index using id
     }
 
 }

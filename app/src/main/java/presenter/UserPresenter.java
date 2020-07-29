@@ -41,6 +41,7 @@ public class UserPresenter {
     }
 
     public void start() {
+        //TODO : always check if ur mview is not null
         mView.init();
     }
 
@@ -57,14 +58,13 @@ public class UserPresenter {
 
                     @Override
                     public void onNext(List<User> users) {
-                        // TODO : please always check if mView is null or not
 
                         if(activityView != null){
                             activityView.onListReady(users);
                         }
+
                         usersList = users;
 
-                         // TODO : no need hold ref if not used later , simply deliver to your view
                     }
 
                     @Override

@@ -18,9 +18,5 @@ public interface UserFragmentContract {
         void onListReady(List<User> users);
     }
 
-    // TODO : not needed . dont use MVP on inflating row items ( let it be a high level concept ) .
-
-    //TODO : it might be helpful to have a high level describe of your presenter .
-    // but i dont think it has any good value here . just let Presenter class has its own methods
 
 }

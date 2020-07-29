@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements UserListFragment.
 
     @Override
     public void onUserSelected(Integer id) {
+        // TODO : instead of creating one and assiging it  , get the fragment from the tab adapter and then ask it to display detail .
         ParentDetailsFragment parentDetailsFragment = ParentDetailsFragment.getInstance(id, users);
         parentDetailsFragment.goToUserId();
         pager.setCurrentItem(USER_DETAILS_INDEX);

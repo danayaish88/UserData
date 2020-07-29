@@ -38,12 +38,13 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
 
 
     public interface OnHeadlineSelectedListener {
-        public void onUserSelected(Integer position);
+        public void onUserSelected(Integer position);  //TODO : remove void , interface method are public final by default
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        // TODO : check if your context is an instance of ur callback , otherwise its gonna cause runtime exception
         callback = (OnHeadlineSelectedListener) context;
     }
 
@@ -54,6 +55,7 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
         View view = inflater.inflate(R.layout.fragment_user_list, container, false);
         ButterKnife.bind(this, view);
 
+        //TODO: i dont think preseneter is any longer needed
         mPresenter = UserPresenter.getIntance();
         mPresenter.setView(this);
 
@@ -65,6 +67,7 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
     }
 
     public static UserListFragment getInstance(List<User> users) {
+        //TODO : please instead use bundle to pass users list , same concept we use to pass data between activities .
         userList = users;
         return new UserListFragment();
     }
@@ -84,14 +87,16 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
     @Override
     public void showError(String message) {
         Toast toast = Toast.makeText(this.getContext(),
-                "Error getting Data",
+                "Error getting Data", //TODO : all texts must be constatnts
                 Toast.LENGTH_SHORT);
 
         toast.show();
     }
 
     public void loadDataInList(List<User> users) {
+        //TODO : get adapter , then check if its null -> create one , if not , check its instance and update
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mPresenter,users);
+        // TODO : let the layout manager call be here , with same check for the adapter .
         rvUsers.setAdapter(recyclerViewAdapter);
     }
 

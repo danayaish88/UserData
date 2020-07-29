@@ -48,7 +48,6 @@ public class RecyclerViewAdapter extends
             emailTextView.setText(email);
         }
 
-        // TODO : create method called bind and le it do the binding
         public void bind(int position) {
             User user=mUsers.get(position);
             this.setName(user.getName());
@@ -70,8 +69,7 @@ public class RecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final RecyclerViewAdapter.ViewHolder viewHolder, int position) {
 
-        //TODO : not a good idea to let your presenter bind view to its data .
-        // try create a method called bind in your view holder that does so .
+
         viewHolder.bind(position);
 
         presenter.setDisposable(RxView.clicks(viewHolder.itemView)

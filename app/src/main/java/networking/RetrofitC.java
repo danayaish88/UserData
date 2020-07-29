@@ -9,7 +9,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitC {
-    private static RetrofitC singleInstance = null;//TODO : please follow convention ( camel casing )
+    private static RetrofitC singleInstance = null;
     private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
     private Api api;
     private Retrofit retrofit;
