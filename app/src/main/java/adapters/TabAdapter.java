@@ -1,5 +1,7 @@
 package adapters;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,8 +18,10 @@ import mainPackage.UserListFragment;
 public class TabAdapter extends FragmentStatePagerAdapter {
 
 
+    public static final int DETAILS_FRAGMENT_INDEX = 1;
     private static final int NUM_OF_TABS = 2;
     private static final Integer DEFAULT_USER_ID = 1;
+    private static final int LIST_FRAGMENT_INDEX = 0;
     private final List<User> users;
 
     public TabAdapter(@NonNull FragmentManager fm, List<User> users) {
@@ -31,10 +35,10 @@ public class TabAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch (position){
             //TODO : use constants instead on indecies
-            case 0:
+            case LIST_FRAGMENT_INDEX:
                 fragment = UserListFragment.getInstance(users);
                 break;
-            case 1:
+            case DETAILS_FRAGMENT_INDEX:
                 fragment = ParentDetailsFragment.getInstance(DEFAULT_USER_ID, users);
                 break;
             default:
@@ -57,10 +61,10 @@ public class TabAdapter extends FragmentStatePagerAdapter {
         CharSequence charSequence = "";
         //TODO : use constants
         switch (position){
-            case 0:
-                charSequence = "List"; // TODO : rename to  Users
+            case LIST_FRAGMENT_INDEX:
+                charSequence = "Users"; // TODO : rename to  Users
                 break;
-            case 1:
+            case DETAILS_FRAGMENT_INDEX:
                 charSequence = "Details";
                 break;
             default:

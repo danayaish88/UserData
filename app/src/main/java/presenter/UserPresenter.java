@@ -1,7 +1,5 @@
 package presenter;
 
-import android.app.Activity;
-
 import java.util.List;
 
 import DataModels.User;
@@ -10,17 +8,15 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import mainPackage.MainActivity;
 import networking.RetrofitC;
 
 public class UserPresenter {
 
     private static UserPresenter singleInstance = null;
 
-    private UserFragmentContract.View mView;
-    private UserFragmentContract.ActivityView activityView;
+    private UserFragmentContract.View view;
     private Disposable disposable;
-    private List<User> usersList = null;
+
 
     public static UserPresenter getIntance() {
         if(singleInstance == null){
@@ -32,17 +28,9 @@ public class UserPresenter {
     private UserPresenter() {
     }
 
-    public void setView(UserFragmentContract.View mView) {
-        this.mView=mView;
-    }
 
     public void setDisposable(Disposable disposable) {
         this.disposable = disposable;
-    }
-
-    public void start() {
-        //TODO : always check if ur mview is not null
-        mView.init();
     }
 
     public void loadUsers() {
@@ -59,17 +47,16 @@ public class UserPresenter {
                     @Override
                     public void onNext(List<User> users) {
 
-                        if(activityView != null){
-                            activityView.onListReady(users);
+                        if(view != null){
+                            view.onListReady(users);
                         }
-
-                        usersList = users;
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
+                        if(view != null){
+                            view.showError(e.getMessage());
+                        }
                     }
 
                     @Override
@@ -85,12 +72,7 @@ public class UserPresenter {
         }
     }
 
-
-    public void sendId(Integer id) {
-        mView.sendId(id);
-    }
-
-    public void setActivityView(UserFragmentContract.ActivityView activityView) {
-        this.activityView = activityView;
+    public void setView(UserFragmentContract.View view) {
+        this.view = view;
     }
 }

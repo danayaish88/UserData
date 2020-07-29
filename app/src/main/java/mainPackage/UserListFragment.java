@@ -11,41 +11,43 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.userdata.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import DataModels.User;
-import adapters.RecyclerViewAdapter;
+import adapters.UsersAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import contract.UserFragmentContract;
 import presenter.UserPresenter;
 
 
-public class UserListFragment extends Fragment implements UserFragmentContract.View {
+public class UserListFragment extends Fragment {
 
     @BindView(R.id.rvUsers)
     RecyclerView rvUsers;
 
-    private UserPresenter mPresenter;
-    private static List<User> userList;
+    private List<User> userList;
 
     OnHeadlineSelectedListener callback;
 
+    public UserListFragment(List<User> users) {
+        userList = users;
+    }
 
     public interface OnHeadlineSelectedListener {
-        public void onUserSelected(Integer position);  //TODO : remove void , interface method are public final by default
+          void onUserSelected(Integer position);  //TODO : remove void , interface method are public final by default
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         // TODO : check if your context is an instance of ur callback , otherwise its gonna cause runtime exception
-        callback = (OnHeadlineSelectedListener) context;
+        if(context instanceof OnHeadlineSelectedListener){
+            callback = (OnHeadlineSelectedListener) context;
+        }
     }
 
     @Override
@@ -56,8 +58,6 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
         ButterKnife.bind(this, view);
 
         //TODO: i dont think preseneter is any longer needed
-        mPresenter = UserPresenter.getIntance();
-        mPresenter.setView(this);
 
         if(userList != null){
             loadDataInList(userList);
@@ -68,47 +68,31 @@ public class UserListFragment extends Fragment implements UserFragmentContract.V
 
     public static UserListFragment getInstance(List<User> users) {
         //TODO : please instead use bundle to pass users list , same concept we use to pass data between activities .
-        userList = users;
-        return new UserListFragment();
+        return new UserListFragment(users);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.start();
-    }
-
-    @Override
-    public void init() {
-        rvUsers.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
-    }
-
-    @Override
-    public void showError(String message) {
-        Toast toast = Toast.makeText(this.getContext(),
-                "Error getting Data", //TODO : all texts must be constatnts
-                Toast.LENGTH_SHORT);
-
-        toast.show();
     }
 
     public void loadDataInList(List<User> users) {
         //TODO : get adapter , then check if its null -> create one , if not , check its instance and update
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mPresenter,users);
+        UsersAdapter usersAdapter = new UsersAdapter(users);
         // TODO : let the layout manager call be here , with same check for the adapter .
-        rvUsers.setAdapter(recyclerViewAdapter);
+        rvUsers.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        rvUsers.setAdapter(usersAdapter);
     }
 
-    @Override
+  /*  @Override
     public void sendId(Integer id) {
         callback.onUserSelected(id);
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.destroy();
-    }
+        mPresenter.destroy(); //should be called from usersAdapter
+    }*/
 
 }

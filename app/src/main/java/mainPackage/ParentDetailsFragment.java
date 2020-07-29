@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 public class ParentDetailsFragment extends Fragment {
 
 
-    public static ParentDetailsFragment singleFragment = null;
+    private static ParentDetailsFragment singleFragment = null;
     private static final String USER_ID = "userId" ;
     private final List<User> users;
 
@@ -71,7 +71,7 @@ public class ParentDetailsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         viewPager.setAdapter(buildAdapter());
-        viewPager.setCurrentItem(id-1); //TODO : NO , get index using id
+        viewPager.setCurrentItem(id-1); //TODO : NO , get index using id.
         return view;
     }
 

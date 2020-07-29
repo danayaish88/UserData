@@ -33,4 +33,13 @@
         android:background="#FFFFFF"
         android:textSize="14sp" />
 
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/favoriteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/star"
+        />
+
+
+
 </LinearLayout>

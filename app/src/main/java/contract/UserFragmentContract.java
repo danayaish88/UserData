@@ -7,16 +7,9 @@ import DataModels.User;
 public interface UserFragmentContract {
 
     interface View {
-        void init();
+        void onListReady(List<User> users);
 
         void showError(String message);
-
-        void sendId(Integer id);
     }
-
-    interface ActivityView {
-        void onListReady(List<User> users);
-    }
-
 
 }

@@ -24,7 +24,7 @@ public class ChildDetailsFragment extends Fragment {
 
 
     public static final String ARG_USER = "user";
-    private static List<User> users;
+    private static ChildDetailsFragment singleInstance = null;
 
     private String name;
     private String username;
@@ -51,20 +51,25 @@ public class ChildDetailsFragment extends Fragment {
     TextView companyTV;
 
     private ChildDetailsFragment() {
-        // Required empty constructor
-
         //TODO : singelton instance
     }
 
     public static ChildDetailsFragment getInstance(int id, List<User> users) {
-        ChildDetailsFragment childDetailsFragment = new ChildDetailsFragment();
+        if(singleInstance == null ){
+            singleInstance = new ChildDetailsFragment();
+        }
 
+        setUser(id, users, singleInstance);
+
+        return singleInstance;
+    }
+
+    private static void setUser(int id, List<User> users, ChildDetailsFragment singleInstance) {
         if(users != null){ // TODO: refactor into method
             Bundle bundle = new Bundle();
             bundle.putParcelable(ARG_USER, users.get(id));
-            childDetailsFragment.setArguments(bundle);
+            singleInstance.setArguments(bundle);
         }
-        return childDetailsFragment;
     }
 
 
@@ -75,13 +80,17 @@ public class ChildDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_child_details, container, false);
         ButterKnife.bind(this, view);
 
-        User u = getUser();///TODO : u !?!?!?!?
-        if(u != null){ //
-            assignValues(u);
-            showValues();
-        }
+        assignUserToView();
 
         return view;
+    }
+
+    private void assignUserToView() {
+        User user = getUser();///TODO : u !?!?!?!?
+        if(user != null){ //
+            assignValues(user);
+            showValues();
+        }
     }
 
 

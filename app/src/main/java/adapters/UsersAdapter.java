@@ -1,7 +1,6 @@
 package adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +17,14 @@ import butterknife.ButterKnife;
 import presenter.UserPresenter;
 
 
-public class RecyclerViewAdapter extends
-        RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class UsersAdapter extends
+        RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
     private UserPresenter presenter;
     private static List<User> mUsers;
 
-    public RecyclerViewAdapter(UserPresenter mPresenter, List<User> users) {
-        presenter = mPresenter;
+    public UsersAdapter(List<User> users) {
+        presenter = UserPresenter.getIntance();
         mUsers = users;
     }
 
@@ -56,7 +55,7 @@ public class RecyclerViewAdapter extends
     }
 
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UsersAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -67,7 +66,7 @@ public class RecyclerViewAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final UsersAdapter.ViewHolder viewHolder, int position) {
 
 
         viewHolder.bind(position);
@@ -77,7 +76,7 @@ public class RecyclerViewAdapter extends
 
                     //TODO : instead of making the presenter start your activity ,
                     // create a static method in your destination activity .
-                    presenter.sendId(mUsers.get(position).getId());
+                    //presenter.sendId(mUsers.get(position).getId());
                 }));
     }
 
