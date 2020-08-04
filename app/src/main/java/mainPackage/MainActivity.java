@@ -26,13 +26,13 @@ public class MainActivity extends AppCompatActivity implements UserListFragment.
 
     public static final String ERROR_MSG = "Error getting Data";
     private static final int USER_DETAILS_INDEX = 1;
+    private TabAdapter pagerAdapter;
+
     @BindView(R.id.pager)
     ViewPager pager;
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
 
-    private TabAdapter pagerAdapter;
-    private List<User> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,25 +49,27 @@ public class MainActivity extends AppCompatActivity implements UserListFragment.
         presenter.loadUsers();
     }
 
-
-    private void setPagerAdapter(List<User> users) {
-        pagerAdapter = new TabAdapter(getSupportFragmentManager(), users);
-        pager.setAdapter(pagerAdapter);
-    }
-
     @Override
     public void onUserSelected(Integer id) {
+        goToSelectedUser(id);
+        pager.setCurrentItem(USER_DETAILS_INDEX);
+    }
+
+    private void goToSelectedUser(Integer id) {
         // TODO : instead of creating one and assiging it  , get the fragment from the tab adapter and then ask it to display detail .
         ParentDetailsFragment parentDetailsFragment = (ParentDetailsFragment) pagerAdapter.getItem(DETAILS_FRAGMENT_INDEX);
-        parentDetailsFragment.goToUserId();
-        pager.setCurrentItem(USER_DETAILS_INDEX);
+        parentDetailsFragment.goToUserId(id);
     }
 
     @Override
     public void onListReady(List<User> users) {
-        this.users = users;
         setPagerAdapter(users);
         tabLayout.setupWithViewPager(pager);
+    }
+
+    private void setPagerAdapter(List<User> users) {
+        pagerAdapter = new TabAdapter(getSupportFragmentManager(), users);
+        pager.setAdapter(pagerAdapter);
     }
 
     @Override

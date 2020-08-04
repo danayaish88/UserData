@@ -8,37 +8,51 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.userdata.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import DataModels.User;
 import adapters.UsersAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import contract.UserFragmentContract;
-import presenter.UserPresenter;
 
 
-public class UserListFragment extends Fragment {
+public class UserListFragment extends Fragment implements UsersAdapter.OnUserSelectedListener {
+
+    private static final String USERS = "Users";
+    private UsersAdapter usersAdapter;
+    private LinearLayoutManager linearLayoutManager;
+    private OnHeadlineSelectedListener callback;
 
     @BindView(R.id.rvUsers)
     RecyclerView rvUsers;
-
-    private List<User> userList;
-
-    OnHeadlineSelectedListener callback;
-
-    public UserListFragment(List<User> users) {
-        userList = users;
-    }
+    @BindView(R.id.noData)
+    TextView noDataTV;
 
     public interface OnHeadlineSelectedListener {
-          void onUserSelected(Integer position);  //TODO : remove void , interface method are public final by default
+        void onUserSelected(Integer position);  //TODO : remove void , interface method are public final by default
+    }
+
+    public UserListFragment() {
+    }
+
+    public static UserListFragment getInstance(List<User> users) {
+        //TODO : please instead use bundle to pass users list , same concept we use to pass data between activities .
+        UserListFragment userListFragment = new UserListFragment();
+
+        Bundle args = new Bundle();
+        args.putParcelableArrayList(USERS, (ArrayList<? extends Parcelable>) users);
+        userListFragment.setArguments(args);
+
+        return userListFragment;
     }
 
     @Override
@@ -59,40 +73,66 @@ public class UserListFragment extends Fragment {
 
         //TODO: i dont think preseneter is any longer needed
 
-        if(userList != null){
-            loadDataInList(userList);
-        }
+        List<User> userList = getUserList();
+
+        viewData(userList);
 
         return view;
     }
 
-    public static UserListFragment getInstance(List<User> users) {
-        //TODO : please instead use bundle to pass users list , same concept we use to pass data between activities .
-        return new UserListFragment(users);
+    private void viewData(List<User> userList) {
+        if(userList != null && userList.size() != 0){
+            loadDataInList(userList);
+            noDataTV.setVisibility(View.INVISIBLE);
+            rvUsers.setVisibility(View.VISIBLE);
+        }else{
+            noDataTV.setVisibility(View.VISIBLE);
+            rvUsers.setVisibility(View.INVISIBLE);
+        }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+    private List<User> getUserList() {
+        if(getArguments() != null){
+            return getArguments().getParcelableArrayList(USERS);
+        }
+        return null;
     }
 
     public void loadDataInList(List<User> users) {
         //TODO : get adapter , then check if its null -> create one , if not , check its instance and update
-        UsersAdapter usersAdapter = new UsersAdapter(users);
+        setUserAdapter();
+
+        setLayoutManager();
+
+        usersAdapter.setData(users);
         // TODO : let the layout manager call be here , with same check for the adapter .
-        rvUsers.setLayoutManager(new LinearLayoutManager(this.getContext()));
+    }
+
+    private void setLayoutManager() {
+        if(linearLayoutManager == null){
+            linearLayoutManager = new LinearLayoutManager(this.getContext());
+        }
+        rvUsers.setLayoutManager(linearLayoutManager);
+    }
+
+    private void setUserAdapter() {
+        if(usersAdapter == null){
+            usersAdapter = new UsersAdapter(this);
+        }
         rvUsers.setAdapter(usersAdapter);
     }
 
-  /*  @Override
+    @Override
     public void sendId(Integer id) {
-        callback.onUserSelected(id);
-    }*/
+        if(callback != null){
+            callback.onUserSelected(id);
+        }
+    }
 
-   /* @Override
+    @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.destroy(); //should be called from usersAdapter
-    }*/
+        usersAdapter.destroy();
+    }
 
 }

@@ -1,7 +1,5 @@
 package adapters;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -32,7 +30,7 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null;
+        Fragment fragment = UserListFragment.getInstance(users);
         switch (position){
             //TODO : use constants instead on indecies
             case LIST_FRAGMENT_INDEX:

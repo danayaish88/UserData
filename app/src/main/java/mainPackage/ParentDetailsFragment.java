@@ -32,7 +32,7 @@ public class ParentDetailsFragment extends Fragment {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-    public ParentDetailsFragment(List<User> users) {
+    private ParentDetailsFragment(List<User> users) {
         this.users = users;
     }
 
@@ -70,17 +70,22 @@ public class ParentDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_parent_details, container, false);
         ButterKnife.bind(this, view);
 
-        viewPager.setAdapter(buildAdapter());
+        setAdapter();
+
         viewPager.setCurrentItem(id-1); //TODO : NO , get index using id.
         return view;
     }
 
-    private PagerAdapter buildAdapter() {
+    private void setAdapter() {
+        DetailsPagerAdapter detailsPagerAdapter = buildAdapter();
+        viewPager.setAdapter(detailsPagerAdapter);
+    }
+
+    private DetailsPagerAdapter buildAdapter() {
         return new DetailsPagerAdapter(getChildFragmentManager(), users);
     }
 
-    public void goToUserId() {
-        Integer id = getUserId();
+    public void goToUserId(Integer id) {
         viewPager.setCurrentItem(id-1);//TODO : NO , get index using id
     }
 

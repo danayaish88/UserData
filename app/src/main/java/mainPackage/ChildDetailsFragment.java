@@ -24,7 +24,6 @@ public class ChildDetailsFragment extends Fragment {
 
 
     public static final String ARG_USER = "user";
-    private static ChildDetailsFragment singleInstance = null;
 
     private String name;
     private String username;
@@ -55,13 +54,12 @@ public class ChildDetailsFragment extends Fragment {
     }
 
     public static ChildDetailsFragment getInstance(int id, List<User> users) {
-        if(singleInstance == null ){
-            singleInstance = new ChildDetailsFragment();
-        }
 
-        setUser(id, users, singleInstance);
+        ChildDetailsFragment childDetailsFragment = new ChildDetailsFragment();
 
-        return singleInstance;
+        setUser(id, users, childDetailsFragment);
+
+        return childDetailsFragment;
     }
 
     private static void setUser(int id, List<User> users, ChildDetailsFragment singleInstance) {
