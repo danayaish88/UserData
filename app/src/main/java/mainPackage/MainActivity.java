@@ -3,6 +3,8 @@ package mainPackage;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -79,5 +81,19 @@ public class MainActivity extends AppCompatActivity implements UserListFragment.
                 Toast.LENGTH_SHORT);
 
         toast.show();
+    }
+
+    @Override
+    public void setFav(Integer id) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(String.valueOf(id), true);
+        editor.apply();
+    }
+
+    @Override
+    public boolean checkisFav(int id) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+          return sharedPref.getBoolean(String.valueOf(id), false);
     }
 }

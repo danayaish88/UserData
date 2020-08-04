@@ -1,5 +1,8 @@
 package presenter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -81,5 +84,19 @@ public class UserPresenter {
 
     public void setView(UserFragmentContract.View view) {
         this.view = view;
+    }
+
+    public void setFav(Integer id) {
+        if(view != null){
+            view.setFav(id);
+        }
+    }
+
+    public boolean checkIfFav(int id) {
+        Boolean isFav = false;
+        if(view != null){
+            isFav = view.checkisFav(id);
+        }
+        return isFav;
     }
 }

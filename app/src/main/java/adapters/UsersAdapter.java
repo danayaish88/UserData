@@ -26,7 +26,7 @@ public class UsersAdapter extends
 
     private static List<User> mUsers;
 
-    private UserPresenter presenter;
+    private static UserPresenter presenter;
     private OnUserSelectedListener callback;
 
 
@@ -50,12 +50,11 @@ public class UsersAdapter extends
         @BindView(R.id.user_email) TextView emailTextView;
         @BindView(R.id.favoriteButton) ImageButton favoriteButton;
 
+        User user;
 
-        View view;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            view = itemView;
         }
 
         public void setName(String name) {
@@ -67,15 +66,18 @@ public class UsersAdapter extends
         }
 
         public void bind(int position) {
-            User user=mUsers.get(position);
+            user=mUsers.get(position);
             this.setName(user.getName());
             this.setEmail(user.getEmail());
+
+            if(presenter.checkIfFav(user.getId()))
+                favoriteButton.setBackgroundResource(R.drawable.ic_baseline_star_24_pressed);
         }
 
         @OnClick(R.id.favoriteButton)
         public void favorited(ImageButton imageButton){
             imageButton.setBackgroundResource(R.drawable.ic_baseline_star_24_pressed);
-            //save id in sharedprefrences
+            presenter.setFav(user.getId());
         }
     }
 

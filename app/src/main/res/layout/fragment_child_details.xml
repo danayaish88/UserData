@@ -18,13 +18,20 @@
         app:srcCompat="@mipmap/ic_launcher_round"
         android:paddingTop="10dp"/>
 
+    <ImageButton
+        android:id="@+id/detailsFavButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_baseline_star_24_normal"
+        android:layout_marginTop="10dp"/>
+
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:hint="name"
-        android:layout_marginTop="10dp"/>
+        android:hint="name" />
 
     <TextView
         android:id="@+id/username"

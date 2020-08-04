@@ -1,5 +1,7 @@
 package mainPackage;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.userdata.R;
@@ -25,6 +28,7 @@ public class ChildDetailsFragment extends Fragment {
 
     public static final String ARG_USER = "user";
 
+    private Integer id;
     private String name;
     private String username;
     private String email;
@@ -48,6 +52,8 @@ public class ChildDetailsFragment extends Fragment {
     TextView websiteTV;
     @BindView(R.id.company)
     TextView companyTV;
+    @BindView(R.id.detailsFavButton)
+    ImageButton favButton;
 
     private ChildDetailsFragment() {
         //TODO : singelton instance
@@ -91,15 +97,21 @@ public class ChildDetailsFragment extends Fragment {
         }
     }
 
+    private Boolean isFav(Integer id) {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getBoolean(String.valueOf(id), false);
+    }
+
 
     private void assignValues(User user) {
-        name=user.getName();
-        username=user.getUsername();
-        email=user.getEmail();
-        address=user.getAddress();
-        phone=user.getPhone();
-        website=user.getWebsite();
-        company=user.getCompany();
+        id = user.getId();
+        name = user.getName();
+        username = user.getUsername();
+        email = user.getEmail();
+        address = user.getAddress();
+        phone = user.getPhone();
+        website = user.getWebsite();
+        company = user.getCompany();
     }
 
     private void showValues() {
@@ -110,11 +122,13 @@ public class ChildDetailsFragment extends Fragment {
         phoneTV.setText(phone);
         websiteTV.setText(website);
         companyTV.setText(company.toString());
+        if(isFav(id)){
+            favButton.setBackgroundResource(R.drawable.ic_baseline_star_24_pressed);
+        }
     }
 
     public User getUser() {
         User user = null;
-
         if(getArguments() != null){
             user = getArguments().getParcelable(ARG_USER);
         }

@@ -10,6 +10,10 @@ public interface UserFragmentContract {
         void onListReady(List<User> users);
 
         void showError(String message);
+
+        void setFav(Integer id);
+
+        boolean checkisFav(int id);
     }
 
 }
