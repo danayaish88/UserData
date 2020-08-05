@@ -86,9 +86,9 @@ public class UserPresenter {
         this.view = view;
     }
 
-    public void setFav(Integer id) {
+    public void setFav(Integer id, Boolean fav) {
         if(view != null){
-            view.setFav(id);
+            view.setFav(id, fav);
         }
     }
 

@@ -84,10 +84,10 @@ public class MainActivity extends AppCompatActivity implements UserListFragment.
     }
 
     @Override
-    public void setFav(Integer id) {
+    public void setFav(Integer id, Boolean fav) {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(String.valueOf(id), true);
+        editor.putBoolean(String.valueOf(id), fav);
         editor.apply();
     }
 
@@ -96,4 +96,5 @@ public class MainActivity extends AppCompatActivity implements UserListFragment.
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
           return sharedPref.getBoolean(String.valueOf(id), false);
     }
+
 }

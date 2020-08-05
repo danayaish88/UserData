@@ -43,14 +43,16 @@ public class UsersAdapter extends
         mUsers = users;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder { //TODO : remove rowView
+    public static class ViewHolder extends RecyclerView.ViewHolder {//TODO : remove rowView
+        public static final boolean FAV = true;
+        public static final boolean UNFAV = false;
 
 
         @BindView(R.id.user_name) TextView nameTextView;
         @BindView(R.id.user_email) TextView emailTextView;
         @BindView(R.id.favoriteButton) ImageButton favoriteButton;
 
-        User user;
+        private User user;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,9 +78,25 @@ public class UsersAdapter extends
 
         @OnClick(R.id.favoriteButton)
         public void favorited(ImageButton imageButton){
-            imageButton.setBackgroundResource(R.drawable.ic_baseline_star_24_pressed);
-            presenter.setFav(user.getId());
+            if(!presenter.checkIfFav(user.getId())){
+                favUser(imageButton);
+            }
+            else{
+                unfavUser(imageButton);
+            }
+
         }
+
+        private void unfavUser(ImageButton imageButton) {
+            imageButton.setBackgroundResource(R.drawable.ic_baseline_star_24_normal);
+            presenter.setFav(user.getId(), UNFAV);
+        }
+
+        private void favUser(ImageButton imageButton) {
+            imageButton.setBackgroundResource(R.drawable.ic_baseline_star_24_pressed);
+            presenter.setFav(user.getId(), FAV);
+        }
+
     }
 
     @Override

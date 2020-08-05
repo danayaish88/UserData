@@ -11,9 +11,10 @@ public interface UserFragmentContract {
 
         void showError(String message);
 
-        void setFav(Integer id);
+        void setFav(Integer id, Boolean fav);
 
         boolean checkisFav(int id);
+
     }
 
 }
