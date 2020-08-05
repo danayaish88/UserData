@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import com.example.userdata.R;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import DataModels.Address;
@@ -21,6 +24,7 @@ import DataModels.Company;
 import DataModels.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import eventBus.FavEvent;
 
 
 public class ChildDetailsFragment extends Fragment {
@@ -87,6 +91,28 @@ public class ChildDetailsFragment extends Fragment {
         assignUserToView();
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(FavEvent favEvent){
+        Boolean fav = favEvent.getFav();
+        if(fav){
+            favButton.setBackgroundResource(R.drawable.ic_baseline_star_24_pressed);
+        }else{
+            favButton.setBackgroundResource(R.drawable.ic_baseline_star_24_normal);
+        }
     }
 
     private void assignUserToView() {

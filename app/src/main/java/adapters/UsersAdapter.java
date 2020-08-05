@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.userdata.R;
 import com.jakewharton.rxbinding2.view.RxView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import DataModels.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import eventBus.FavEvent;
 import presenter.UserPresenter;
 
 
@@ -90,11 +93,13 @@ public class UsersAdapter extends
         private void unfavUser(ImageButton imageButton) {
             imageButton.setBackgroundResource(R.drawable.ic_baseline_star_24_normal);
             presenter.setFav(user.getId(), UNFAV);
+            EventBus.getDefault().post(new FavEvent(UNFAV));
         }
 
         private void favUser(ImageButton imageButton) {
             imageButton.setBackgroundResource(R.drawable.ic_baseline_star_24_pressed);
             presenter.setFav(user.getId(), FAV);
+            EventBus.getDefault().post(new FavEvent(FAV));
         }
 
     }
