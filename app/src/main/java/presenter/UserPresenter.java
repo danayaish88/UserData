@@ -1,18 +1,8 @@
 package presenter;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
-import DataModels.User;
+import dataModels.User;
 import contract.UserFragmentContract;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

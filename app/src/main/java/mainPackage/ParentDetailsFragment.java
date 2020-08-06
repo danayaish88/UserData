@@ -3,7 +3,6 @@ package mainPackage;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import com.example.userdata.R;
 
 import java.util.List;
 
-import DataModels.User;
+import dataModels.User;
 import adapters.DetailsPagerAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;

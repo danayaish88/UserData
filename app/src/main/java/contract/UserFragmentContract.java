@@ -2,7 +2,7 @@ package contract;
 
 import java.util.List;
 
-import DataModels.User;
+import dataModels.User;
 
 public interface UserFragmentContract {
 

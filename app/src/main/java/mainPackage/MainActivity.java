@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 
-import DataModels.User;
+import dataModels.User;
 import adapters.TabAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;

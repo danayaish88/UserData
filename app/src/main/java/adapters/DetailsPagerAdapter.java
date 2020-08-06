@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-import DataModels.User;
+import dataModels.User;
 import mainPackage.ChildDetailsFragment;
 
 public class DetailsPagerAdapter extends FragmentStatePagerAdapter {

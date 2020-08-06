@@ -19,9 +19,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-import DataModels.Address;
-import DataModels.Company;
-import DataModels.User;
+import dataModels.Address;
+import dataModels.Company;
+import dataModels.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eventBus.FavEvent;

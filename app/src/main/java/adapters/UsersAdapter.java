@@ -16,7 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import DataModels.User;
+import dataModels.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -82,24 +82,18 @@ public class UsersAdapter extends
         @OnClick(R.id.favoriteButton)
         public void favorited(ImageButton imageButton){
             if(!presenter.checkIfFav(user.getId())){
-                favUser(imageButton);
+                imageButton.setBackgroundResource(R.drawable.ic_baseline_star_24_pressed);
+                setFav(FAV);
             }
             else{
-                unfavUser(imageButton);
+                imageButton.setBackgroundResource(R.drawable.ic_baseline_star_24_normal);
+                setFav(UNFAV);
             }
-
         }
 
-        private void unfavUser(ImageButton imageButton) {
-            imageButton.setBackgroundResource(R.drawable.ic_baseline_star_24_normal);
-            presenter.setFav(user.getId(), UNFAV);
-            EventBus.getDefault().post(new FavEvent(UNFAV));
-        }
-
-        private void favUser(ImageButton imageButton) {
-            imageButton.setBackgroundResource(R.drawable.ic_baseline_star_24_pressed);
-            presenter.setFav(user.getId(), FAV);
-            EventBus.getDefault().post(new FavEvent(FAV));
+        private void setFav(boolean favourity) {
+            presenter.setFav(user.getId(), favourity);
+            EventBus.getDefault().post(new FavEvent(favourity));
         }
 
     }

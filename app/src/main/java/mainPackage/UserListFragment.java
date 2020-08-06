@@ -1,7 +1,6 @@
 package mainPackage;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,7 @@ import com.example.userdata.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import DataModels.User;
+import dataModels.User;
 import adapters.UsersAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;

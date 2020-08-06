@@ -1,4 +1,4 @@
-package DataModels;
+package dataModels;
 
 import android.os.Parcel;
 import android.os.Parcelable;

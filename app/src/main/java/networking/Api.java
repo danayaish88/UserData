@@ -1,6 +1,6 @@
 package networking;
 
-import DataModels.User;
+import dataModels.User;
 
 import java.util.List;
 
