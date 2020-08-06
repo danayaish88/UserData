@@ -108,9 +108,11 @@ public class ChildDetailsFragment extends Fragment {
     @Subscribe
     public void onEvent(FavEvent favEvent){
         Boolean fav = favEvent.getFav();
-        if(fav){
+        Integer id = favEvent.getId();
+
+        if(fav && id.equals(getUser().getId())){
             favButton.setBackgroundResource(R.drawable.ic_baseline_star_24_pressed);
-        }else{
+        }else if(!fav && id.equals(getUser().getId())){
             favButton.setBackgroundResource(R.drawable.ic_baseline_star_24_normal);
         }
     }

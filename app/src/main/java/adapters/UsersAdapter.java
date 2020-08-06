@@ -93,7 +93,7 @@ public class UsersAdapter extends
 
         private void setFav(boolean favourity) {
             presenter.setFav(user.getId(), favourity);
-            EventBus.getDefault().post(new FavEvent(favourity));
+            EventBus.getDefault().post(new FavEvent(favourity, user.getId()));
         }
 
     }
